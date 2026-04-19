@@ -261,6 +261,11 @@ p  { margin: 0 0 1.1em; color: #dad3c4; max-width: 62ch; }
   transform: scale(1.04);
   animation: heroBreathe 18s ease-in-out infinite alternate;
 }
+/* Homepage hero: landscape desktop crop → portrait mobile crop (keeps subject centered) */
+.hero__bg--home { background-image: url('../images/hero/home.jpg?v=4'); }
+@media (max-width: 720px) {
+  .hero__bg--home { background-image: url('../images/hero/home-mobile.jpg?v=4'); }
+}
 @keyframes heroBreathe {
   from { transform: scale(1.04); }
   to   { transform: scale(1.10); }
