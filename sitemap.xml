@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <url>
+    <loc>https://mtframestudio.com/</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://mtframestudio.com/assets/images/hero/home.jpg</image:loc>
+      <image:caption>MT Frame Studio — wedding &amp; portrait photography, Alton, NH</image:caption>
+      <image:title>MT Frame Studio · Alton, New Hampshire</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://mtframestudio.com/about.html</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://mtframestudio.com/assets/images/hero/about.jpg</image:loc>
+      <image:caption>About Megan &amp; Trent — MT Frame Studio, Alton, NH</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://mtframestudio.com/investment.html</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://mtframestudio.com/assets/images/hero/investment.jpg</image:loc>
+      <image:caption>Wedding &amp; portrait photography investment guide — MT Frame Studio</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://mtframestudio.com/contact.html</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://mtframestudio.com/assets/images/hero/contact.jpg</image:loc>
+      <image:caption>Inquire with MT Frame Studio — Alton, NH wedding photography</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://mtframestudio.com/galleries/weddings.html</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.95</priority>
+    <image:image>
+      <image:loc>https://mtframestudio.com/assets/images/weddings/01.jpg</image:loc>
+      <image:caption>Snow Canyon engagement — MT Frame Studio wedding photography</image:caption>
+      <image:title>Snow Canyon Engagement</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://mtframestudio.com/assets/images/weddings/02.jpg</image:loc>
+      <image:caption>A stolen moment — MT Frame Studio</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://mtframestudio.com/assets/images/weddings/03.jpg</image:loc>
+      <image:caption>Winter whispers — MT Frame Studio wedding portrait</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://mtframestudio.com/galleries/portraits.html</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image><image:loc>https://mtframestudio.com/assets/images/portraits/01.jpg</image:loc><image:caption>Sunset at the shore — portrait by MT Frame Studio</image:caption></image:image>
+    <image:image><image:loc>https://mtframestudio.com/assets/images/portraits/02.jpg</image:loc><image:caption>A quiet profile — MT Frame Studio</image:caption></image:image>
+    <image:image><image:loc>https://mtframestudio.com/assets/images/portraits/03.jpg</image:loc><image:caption>Golden hour dreaming — MT Frame Studio</image:caption></image:image>
+    <image:image><image:loc>https://mtframestudio.com/assets/images/portraits/04.jpg</image:loc><image:caption>Barefoot at the tide — MT Frame Studio</image:caption></image:image>
+    <image:image><image:loc>https://mtframestudio.com/assets/images/portraits/05.jpg</image:loc><image:caption>Last light — MT Frame Studio</image:caption></image:image>
+    <image:image><image:loc>https://mtframestudio.com/assets/images/portraits/06.jpg</image:loc><image:caption>Into the sky — MT Frame Studio</image:caption></image:image>
+    <image:image><image:loc>https://mtframestudio.com/assets/images/portraits/07.jpg</image:loc><image:caption>Looking up — MT Frame Studio</image:caption></image:image>
+    <image:image><image:loc>https://mtframestudio.com/assets/images/portraits/08.jpg</image:loc><image:caption>Red rock reflection — MT Frame Studio</image:caption></image:image>
+    <image:image><image:loc>https://mtframestudio.com/assets/images/portraits/09.jpg</image:loc><image:caption>The adventurer — MT Frame Studio</image:caption></image:image>
+    <image:image><image:loc>https://mtframestudio.com/assets/images/portraits/10.jpg</image:loc><image:caption>Summer siblings — MT Frame Studio</image:caption></image:image>
+    <image:image><image:loc>https://mtframestudio.com/assets/images/portraits/11.jpg</image:loc><image:caption>Brothers &amp; sisters — MT Frame Studio</image:caption></image:image>
+  </url>
+
+  <url>
+    <loc>https://mtframestudio.com/galleries/maternity.html</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image><image:loc>https://mtframestudio.com/assets/images/maternity/01.jpg</image:loc><image:caption>A tender embrace — MT Frame Studio maternity photography</image:caption></image:image>
+    <image:image><image:loc>https://mtframestudio.com/assets/images/maternity/02.jpg</image:loc><image:caption>Expecting joy — MT Frame Studio</image:caption></image:image>
+    <image:image><image:loc>https://mtframestudio.com/assets/images/maternity/03.jpg</image:loc><image:caption>The three of us — MT Frame Studio</image:caption></image:image>
+    <image:image><image:loc>https://mtframestudio.com/assets/images/maternity/04.jpg</image:loc><image:caption>A little honey — MT Frame Studio</image:caption></image:image>
+    <image:image><image:loc>https://mtframestudio.com/assets/images/maternity/05.jpg</image:loc><image:caption>Welcome, Noah — MT Frame Studio</image:caption></image:image>
+    <image:image><image:loc>https://mtframestudio.com/assets/images/maternity/06.jpg</image:loc><image:caption>Mother &amp; daughter — MT Frame Studio</image:caption></image:image>
+    <image:image><image:loc>https://mtframestudio.com/assets/images/maternity/07.jpg</image:loc><image:caption>Generations — MT Frame Studio</image:caption></image:image>
+    <image:image><image:loc>https://mtframestudio.com/assets/images/maternity/08.jpg</image:loc><image:caption>Sisters &amp; the bump — MT Frame Studio</image:caption></image:image>
+    <image:image><image:loc>https://mtframestudio.com/assets/images/maternity/09.jpg</image:loc><image:caption>Best friends forever — MT Frame Studio</image:caption></image:image>
+    <image:image><image:loc>https://mtframestudio.com/assets/images/maternity/10.jpg</image:loc><image:caption>Garden trio — MT Frame Studio</image:caption></image:image>
+    <image:image><image:loc>https://mtframestudio.com/assets/images/maternity/11.jpg</image:loc><image:caption>Family portrait — MT Frame Studio</image:caption></image:image>
+  </url>
+
+  <url>
+    <loc>https://mtframestudio.com/galleries/events.html</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image><image:loc>https://mtframestudio.com/assets/images/events/01.jpg</image:loc><image:caption>Mommy to Bee — MT Frame Studio event photography</image:caption></image:image>
+    <image:image><image:loc>https://mtframestudio.com/assets/images/events/02.jpg</image:loc><image:caption>Honey favor table — MT Frame Studio</image:caption></image:image>
+    <image:image><image:loc>https://mtframestudio.com/assets/images/events/03.jpg</image:loc><image:caption>Don't Say Baby — MT Frame Studio</image:caption></image:image>
+    <image:image><image:loc>https://mtframestudio.com/assets/images/events/04.jpg</image:loc><image:caption>The bridal party — MT Frame Studio</image:caption></image:image>
+    <image:image><image:loc>https://mtframestudio.com/assets/images/events/05.jpg</image:loc><image:caption>Garden gathering — MT Frame Studio</image:caption></image:image>
+    <image:image><image:loc>https://mtframestudio.com/assets/images/events/06.jpg</image:loc><image:caption>Gathered for Noah — MT Frame Studio</image:caption></image:image>
+    <image:image><image:loc>https://mtframestudio.com/assets/images/events/07.jpg</image:loc><image:caption>Under the tent — MT Frame Studio</image:caption></image:image>
+    <image:image><image:loc>https://mtframestudio.com/assets/images/events/08.jpg</image:loc><image:caption>Welcome-home cake — MT Frame Studio</image:caption></image:image>
+  </url>
+</urlset>

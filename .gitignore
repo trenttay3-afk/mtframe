@@ -1,0 +1,29 @@
+# macOS
+.DS_Store
+._*
+.AppleDouble
+.LSOverride
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Python (from the build scripts)
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Logs
+*.log
+
+# Local admin / scratch
+/admin/_local/
+/admin/drafts/
+
+# Node, just in case
+node_modules/

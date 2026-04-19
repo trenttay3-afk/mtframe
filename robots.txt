@@ -1,0 +1,27 @@
+# MT Frame Studio — robots.txt
+# Alton, NH wedding & portrait photography · https://mtframestudio.com/
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /*.json$
+
+# Friendly with image indexers — photography is the product
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot-Image
+Allow: /
+
+# Block aggressive scrapers / AI training crawlers if desired
+# (Uncomment to opt out of these specific bots)
+# User-agent: GPTBot
+# Disallow: /
+# User-agent: CCBot
+# Disallow: /
+# User-agent: anthropic-ai
+# Disallow: /
+# User-agent: Google-Extended
+# Disallow: /
+
+Sitemap: https://mtframestudio.com/sitemap.xml

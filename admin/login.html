@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin Login · MT Frame Studio</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="../assets/images/logo/favicon.ico">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/styles.css?v=4">
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav__brand" href="../index.html">
+    <img src="../assets/images/logo/mark.png" alt="">
+    <div><span>MT Frame Studio</span><small>Weddings &amp; Portraits</small></div>
+  </a>
+  <button class="nav__toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  <ul class="nav__links">
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="../galleries/weddings.html">Weddings</a></li>
+    <li><a href="../galleries/portraits.html">Portraits</a></li>
+    <li><a href="../galleries/maternity.html">Maternity</a></li>
+    <li><a href="../contact.html" class="nav__cta">Inquire</a></li>
+  </ul>
+</nav>
+
+<section class="admin-wrap">
+  <div class="admin-card">
+    <img src="../assets/images/logo/mark.png" alt="MT Frame Studio">
+    <h2>Studio Access</h2>
+    <div class="sub">Private · Admin</div>
+
+    <form id="login-form" class="form" autocomplete="off">
+      <div class="field">
+        <label for="u">Username</label>
+        <input id="u" name="username" type="text" required autofocus>
+      </div>
+      <div class="field">
+        <label for="p">Password</label>
+        <input id="p" name="password" type="password" required>
+      </div>
+      <button type="submit" class="btn btn--solid">Sign In</button>
+      <div class="admin-error" aria-live="polite"></div>
+    </form>
+
+    <div class="admin-note">
+      <strong style="color:var(--gold); letter-spacing:.22em; font-size:.7rem; text-transform:uppercase;">Demo credentials</strong><br>
+      <span style="font-family:var(--mono); font-size:.85rem; color:#e8e1d2;">admin&nbsp;/&nbsp;mtframe2026</span><br>
+      <span style="font-size:.7rem; line-height:1.5;">Client-side only. Wire up to a backend before production.</span>
+    </div>
+  </div>
+</section>
+
+<script src="../assets/js/admin.js?v=4"></script>
+</body>
+</html>
