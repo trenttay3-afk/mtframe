@@ -1,20 +1,42 @@
 """Generate the four gallery pages from a category spec.
 
-Runs locally at build time. Gallery pages live at website/galleries/*.html
+Runs locally at build time. Gallery pages live at galleries/*.html
 and load images from ../assets/images/<cat>/NN.jpg (+ -thumb.jpg).
+
+Nav and footer markup are loaded from _partials/ so changes there
+propagate to every gallery page on rebuild.
 """
 from pathlib import Path
 
-ROOT = Path("/sessions/beautiful-jolly-darwin/mnt/MTFrameStudio Website/website")
+ROOT = Path(__file__).resolve().parent
+PARTIALS = ROOT / "_partials"
 OUT  = ROOT / "galleries"
 OUT.mkdir(exist_ok=True)
+
+NAV_KEYS = ["home", "about", "weddings", "portraits", "maternity", "events",
+            "investment", "contact"]
+
+
+def _render_partial(template: str, active_key: str | None) -> str:
+    """Fill {{BASE}}, {{GALLERIES}}, and {{ACTIVE_*}} for a gallery page.
+    Gallery pages sit one level below the root, so BASE="../" and
+    GALLERIES="" (sibling-relative)."""
+    out = template.replace("{{BASE}}", "../").replace("{{GALLERIES}}", "")
+    for key in NAV_KEYS:
+        token = "{{ACTIVE_" + key + "}}"
+        out = out.replace(token, "active" if key == active_key else "")
+    return out
+
+
+NAV_TEMPLATE = (PARTIALS / "nav.html").read_text(encoding="utf-8")
+FOOTER_TEMPLATE = (PARTIALS / "footer.html").read_text(encoding="utf-8")
 
 CATS = {
     "weddings": {
         "title": "Weddings & Engagements",
         "hero_text": "Weddings",
         "headline": "Weddings & <em>Engagements</em>",
-        "lede": "Editorial, unhurried wedding stories. From quiet elopements in Zion to candlelit evenings in Newport, we photograph weddings the way we hope you'll remember them — honestly.",
+        "lede": "Editorial, unhurried wedding stories. From quiet elopements in Zion to candlelit evenings in Newport, we photograph weddings honestly, the way we hope you'll remember them.",
         "seo_title": "Wedding Photography Portfolio · MT Frame Studio",
         "seo_desc":  "A portfolio of wedding and engagement photography by MT Frame Studio. Editorial, timeless imagery for couples across New England and beyond.",
         "hero_img": "../assets/images/weddings/04.jpg",
@@ -32,7 +54,7 @@ CATS = {
         "headline": "Portraits <em>&amp;</em> Lifestyle",
         "lede": "Individuals, couples, siblings, and families. Portrait sessions at golden hour, in winter light, and everywhere the light happens to be generous that day.",
         "seo_title": "Portrait Photography · Portfolio · MT Frame Studio",
-        "seo_desc":  "A portrait photography portfolio — individuals, couples, families, and siblings. Natural, editorial work by MT Frame Studio.",
+        "seo_desc":  "A portrait photography portfolio of individuals, couples, families, and siblings. Natural, editorial work by MT Frame Studio.",
         "hero_img": "../assets/images/portraits/02.jpg",
         "images": [
             ("01", "Sunset at the shore"),
@@ -77,7 +99,7 @@ CATS = {
         "headline": "Events <em>&amp;</em> Celebrations",
         "lede": "Baby showers, family gatherings, engagement parties. The details, the laughter, the tables and the people around them.",
         "seo_title": "Event Photography · Portfolio · MT Frame Studio",
-        "seo_desc":  "Event photography portfolio — baby showers, celebrations, and gatherings by MT Frame Studio.",
+        "seo_desc":  "Event photography portfolio of baby showers, celebrations, and gatherings by MT Frame Studio.",
         "hero_img": "../assets/images/events/01.jpg",
         "images": [
             ("01", "Mommy to Bee"),
@@ -94,58 +116,6 @@ CATS = {
     },
 }
 
-NAV = """
-<nav class="nav">
-  <a class="nav__brand" href="../index.html">
-    <img src="../assets/images/logo/mark.png" alt="">
-    <div><span>MT Frame Studio</span><small>Weddings &amp; Portraits</small></div>
-  </a>
-  <button class="nav__toggle" aria-label="Menu"><span></span><span></span><span></span></button>
-  <ul class="nav__links">
-    <li><a href="../index.html">Home</a></li>
-    <li><a href="../about.html">About</a></li>
-    <li><a href="weddings.html" class="{ACTIVE_W}">Weddings</a></li>
-    <li><a href="portraits.html" class="{ACTIVE_P}">Portraits</a></li>
-    <li><a href="maternity.html" class="{ACTIVE_M}">Maternity</a></li>
-    <li><a href="events.html" class="{ACTIVE_E}">Events</a></li>
-    <li><a href="../investment.html">Investment</a></li>
-    <li><a href="../contact.html" class="nav__cta">Inquire</a></li>
-  </ul>
-</nav>
-"""
-
-FOOTER = """
-<footer class="footer">
-  <div class="footer__grid">
-    <div>
-      <div class="footer__brand">
-        <img src="../assets/images/logo/mark.png" alt="">
-        <div><span>MT Frame Studio</span><small>Weddings &amp; Portraits</small></div>
-      </div>
-      <p style="font-size:.9rem;">Editorial, timeless photography for couples and families. New England-based.</p>
-    </div>
-    <div><h4>Galleries</h4><ul>
-      <li><a href="weddings.html">Weddings</a></li>
-      <li><a href="portraits.html">Portraits</a></li>
-      <li><a href="maternity.html">Maternity</a></li>
-      <li><a href="events.html">Events</a></li>
-    </ul></div>
-    <div><h4>Studio</h4><ul>
-      <li><a href="../about.html">About</a></li>
-      <li><a href="../investment.html">Investment</a></li>
-      <li><a href="../contact.html">Contact</a></li>
-      <li><a href="../admin/login.html">Client / Admin</a></li>
-    </ul></div>
-    <div><h4>Connect</h4><ul>
-      <li><a href="mailto:mtframephotography@gmail.com">mtframephotography@gmail.com</a></li>
-      <li><a href="https://instagram.com/mtframestudio" target="_blank" rel="noopener">@mtframestudio</a></li>
-      <li>New England &amp; beyond</li>
-    </ul></div>
-  </div>
-  <div class="footer__copy">© <span data-year></span> MT Frame Studio · All photographs © Megan &amp; Trent.</div>
-</footer>
-"""
-
 def render(cat_key, cat):
     images_html = []
     for name, cap in cat["images"]:
@@ -155,14 +125,12 @@ def render(cat_key, cat):
     </figure>''')
     images_markup = "\n".join(images_html)
 
-    nav = NAV.replace("{ACTIVE_W}", "active" if cat_key == "weddings" else "") \
-             .replace("{ACTIVE_P}", "active" if cat_key == "portraits" else "") \
-             .replace("{ACTIVE_M}", "active" if cat_key == "maternity" else "") \
-             .replace("{ACTIVE_E}", "active" if cat_key == "events" else "")
+    nav = _render_partial(NAV_TEMPLATE, cat_key)
+    footer = _render_partial(FOOTER_TEMPLATE, None)
 
     # Image object JSON-LD for each photo (helps Google Images)
     schema_images = "\n".join([
-        f'''  {{"@type":"ImageObject","url":"https://mtframestudio.com/assets/images/{cat_key}/{n}.jpg","name":"{c}","creator":{{"@type":"Organization","name":"Megan &amp; Trent — MT Frame Studio"}}}}{"," if i < len(cat["images"])-1 else ""}'''
+        f'''  {{"@type":"ImageObject","url":"https://mtframestudio.com/assets/images/{cat_key}/{n}.jpg","name":"{c}","creator":{{"@type":"Organization","name":"Megan &amp; Trent, MT Frame Studio"}}}}{"," if i < len(cat["images"])-1 else ""}'''
         for i, (n, c) in enumerate(cat["images"])
     ])
 
@@ -183,7 +151,7 @@ def render(cat_key, cat):
 <link rel="icon" href="../assets/images/logo/favicon.ico">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/css/styles.css">
+<link rel="stylesheet" href="../assets/css/styles.css?v=9">
 
 <script type="application/ld+json">
 {{
@@ -228,7 +196,7 @@ def render(cat_key, cat):
     <span class="eyebrow">Like what you see?</span>
     <h2>Let's chat about your session.</h2>
     <p>We take a small, deliberate number of bookings each year so every client gets our full attention.
-       Send an inquiry &mdash; we'll reply within 48 hours.</p>
+       Send an inquiry. We'll reply within 48 hours.</p>
     <a href="../contact.html" class="btn btn--solid">Begin Your Inquiry</a>
   </div>
 </section>
@@ -242,7 +210,7 @@ def render(cat_key, cat):
   <div class="lightbox__cap"></div>
 </div>
 
-{FOOTER}
+{footer}
 
 <script src="../assets/js/main.js"></script>
 </body>

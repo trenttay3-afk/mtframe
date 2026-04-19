@@ -212,7 +212,7 @@
       // Honeypot — if filled, silently drop
       const hp = form.querySelector('[name="website"]');
       if (hp && hp.value) {
-        statusEl.textContent = "Thank you — your inquiry has been received.";
+        statusEl.textContent = "Thank you. Your inquiry has been received.";
         form.reset();
         return;
       }
@@ -230,7 +230,7 @@
       }
 
       statusEl.textContent =
-        "Thank you — your inquiry has been received. Megan & Trent will be in touch within 48 business hours.";
+        "Thank you. Your inquiry has been received. Megan & Trent will be in touch within 48 business hours.";
       form.reset();
       syncBranches();
       setTimeout(() => {
