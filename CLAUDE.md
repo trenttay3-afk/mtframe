@@ -34,23 +34,11 @@ python3 build_galleries.py   # emits galleries/{weddings,portraits,maternity,eve
 - **Top-level pages are built from `_src/` + `_partials/`**: sources live in `_src/index.html`, `_src/about.html`, `_src/investment.html`, `_src/contact.html`, `_src/404.html` with `{{NAV}}` / `{{FOOTER}}` placeholders. `build.py` injects the shared partials and writes the final HTML to repo root (where Pages serves it). Edit sources, never the generated top-level files — they get overwritten.
 - **Gallery pages are hand-edited with chrome synced in**: `galleries/*.html` carry their own body/meta/JSON-LD but their `<nav>` and `<footer>` blocks get surgically replaced by `build.py`'s `sync_gallery_chrome()` so nav changes propagate. Full regeneration from `build_galleries.py`'s `CATS` spec is still available but opt-in (see note below).
 - **Nav/footer live in `_partials/nav.html` and `_partials/footer.html`**: placeholders are `{{BASE}}` (path to site root), `{{GALLERIES}}` (path to galleries dir), and `{{ACTIVE_home|about|weddings|…}}`. Change navigation here once.
-- **Image set is generated**: files under `assets/images/<category>/NN.jpg` and `NN-thumb.jpg` come from `build_images.py`'s `PLAN` list. Category folders, filenames, and the `SEED` in `assets/js/admin.js` all mirror that list — keep them in sync. Image dimensions are written to `assets/images/manifest.json`.
+- **Image set is generated**: files under `assets/images/<category>/NN.jpg` and `NN-thumb.jpg` come from `build_images.py`'s `PLAN` list. Category folders and filenames mirror that list — keep them in sync. Image dimensions are written to `assets/images/manifest.json`.
 - **Gallery CATS is out of sync with disk**: `build_galleries.py`'s `CATS` dict currently lists more images than exist on disk (weddings/maternity/events). Running `build_galleries.py` will emit gallery HTML referencing missing images and will also drop the hand-edited `<meta>` and JSON-LD blocks that are currently on the gallery pages. Trim `CATS` and fold the extra meta into the template before running it.
-- **JS is two vanilla IIFEs**: `assets/js/main.js` (nav toggle, reveal-on-scroll, lightbox keyboard nav ←/→/Esc, contact form → `mtfs_inquiries` localStorage) and `assets/js/admin.js`.
+- **JS is a single vanilla IIFE**: `assets/js/main.js` (nav toggle, reveal-on-scroll, lightbox keyboard nav ←/→/Esc, contact form → `mtfs_inquiries` localStorage).
 - **SEO**: per-page JSON-LD blocks (`LocalBusiness`, `WebSite`, `AboutPage`, `ContactPage`, `Service`, `ImageGallery`), plus `sitemap.xml` with `<image:image>` entries. When adding/removing gallery photos, regenerate gallery pages **and** hand-update `sitemap.xml`.
 - **Deployment hint**: `.nojekyll` at the root — intended for GitHub Pages.
-
-## Admin area (prototype)
-
-`/admin/login.html` + `/admin/dashboard.html` are a **demo-only, client-side** prototype. All state lives in the browser:
-
-- `mtfs_session` — login session
-- `mtfs_gallery` — gallery edits (diverges from the filesystem once touched)
-- `mtfs_inquiries` — contact-form submissions
-
-Credentials are hard-coded in `assets/js/admin.js` (`admin` / `mtframe2026`). Before production, the README calls out three swaps: real auth, real gallery storage, and real inquiry delivery (Formspree/Resend/API → `mtframephotography@gmail.com`).
-
-`robots.txt` blocks `/admin/`.
 
 ## External dependencies embedded in source
 
