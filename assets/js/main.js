@@ -182,6 +182,37 @@
     );
   }
 
+  /* ---------- Success modal (floating confirmation) ---------- */
+  const successModal = document.querySelector("#success-modal");
+  let lastFocusBeforeModal = null;
+  const openSuccessModal = () => {
+    if (!successModal) return;
+    lastFocusBeforeModal = document.activeElement;
+    successModal.classList.add("open");
+    successModal.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+    const closeBtn = successModal.querySelector(".success-modal__close");
+    if (closeBtn) closeBtn.focus();
+  };
+  const closeSuccessModal = () => {
+    if (!successModal) return;
+    successModal.classList.remove("open");
+    successModal.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+    if (lastFocusBeforeModal && lastFocusBeforeModal.focus) lastFocusBeforeModal.focus();
+  };
+  if (successModal) {
+    successModal
+      .querySelectorAll("[data-close-success]")
+      .forEach((el) => el.addEventListener("click", closeSuccessModal));
+    successModal.addEventListener("click", (e) => {
+      if (e.target === successModal) closeSuccessModal();
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && successModal.classList.contains("open")) closeSuccessModal();
+    });
+  }
+
   /* ---------- Inquiry form: branching + honeypot + Formspree submit ---------- */
   const FORMSPREE_ENDPOINT = "https://formspree.io/f/xjgjowon";
 
@@ -215,19 +246,20 @@
       // Honeypot — if filled, silently pretend success and drop the request
       const hp = form.querySelector('[name="website"]');
       if (hp && hp.value) {
-        statusEl.textContent = "Thank you. Your inquiry has been received.";
         form.reset();
+        openSuccessModal();
         return;
       }
 
-      // Build the submission payload
-      const data = Object.fromEntries(new FormData(form).entries());
-      const sessionType = data.type || "inquiry";
-      const inquirer = data.name || "(no name)";
-      // Pretty subject line for the email Formspree sends to your inbox
-      data._subject = `New ${sessionType} inquiry from ${inquirer}`;
-      // Make "reply" in Gmail go straight back to the inquirer
-      if (data.email) data._replyto = data.email;
+      // Build the FormData that actually gets sent. We append the pretty
+      // subject line and Reply-To header directly onto the FormData so
+      // Formspree picks them up (setting them on a sibling object did nothing).
+      const fd = new FormData(form);
+      const sessionType = fd.get("type") || "inquiry";
+      const inquirer = fd.get("name") || "(no name)";
+      fd.set("_subject", `New ${sessionType} inquiry from ${inquirer}`);
+      const emailVal = fd.get("email");
+      if (emailVal) fd.set("_replyto", emailVal);
 
       statusEl.style.color = "var(--gold)";
       statusEl.textContent = "Sending…";
@@ -237,30 +269,47 @@
         const res = await fetch(FORMSPREE_ENDPOINT, {
           method: "POST",
           headers: { Accept: "application/json" },
-          body: new FormData(form),
+          body: fd,
         });
 
         if (res.ok) {
-          statusEl.style.color = "var(--gold)";
-          statusEl.textContent =
-            "Thank you. Your inquiry has been received. Megan & Trent will be in touch within 48 business hours.";
+          statusEl.textContent = "";
           form.reset();
           syncBranches();
-          setTimeout(() => {
-            statusEl.textContent = "";
-          }, 12000);
+          openSuccessModal();
         } else {
-          const body = await res.json().catch(() => ({}));
-          const msg =
-            (body && body.errors && body.errors.map((x) => x.message).join(", ")) ||
-            "Something went wrong sending your inquiry. Please email mtframephotography@gmail.com directly.";
+          // Surface whatever Formspree actually returned so we can see
+          // the real reason (unactivated form, reCAPTCHA mismatch, etc.).
+          let detail = `Formspree returned ${res.status}`;
+          if (res.statusText) detail += " " + res.statusText;
+          try {
+            const body = await res.json();
+            if (body) {
+              if (Array.isArray(body.errors) && body.errors.length) {
+                detail = body.errors
+                  .map((x) => x.message || x.field || x.code || "error")
+                  .join(", ");
+              } else if (typeof body.error === "string") {
+                detail = body.error;
+              }
+            }
+          } catch (_) {
+            /* non-JSON response — keep the HTTP status line */
+          }
           statusEl.style.color = "#d97a6c";
-          statusEl.textContent = msg;
+          statusEl.textContent =
+            detail +
+            ". Please email mtframephotography@gmail.com directly.";
+          // Also log for the site owner's devtools
+          console.warn("[MT Frame Studio] Formspree submission failed:", detail);
         }
       } catch (err) {
         statusEl.style.color = "#d97a6c";
         statusEl.textContent =
-          "Network error sending your inquiry. Please email mtframephotography@gmail.com directly.";
+          "Network error: " +
+          (err && err.message ? err.message : "unknown") +
+          ". Please email mtframephotography@gmail.com directly.";
+        console.warn("[MT Frame Studio] Formspree network error:", err);
       } finally {
         if (submitBtn) submitBtn.disabled = false;
       }
