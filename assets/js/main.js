@@ -182,7 +182,11 @@
     );
   }
 
-  /* ---------- Inquiry form: branching + honeypot ---------- */
+  /* ---------- Inquiry form: branching + honeypot + Formspree submit ---------- */
+  // Formspree endpoint — replace YOUR_FORM_ID with the form ID from your
+  // Formspree dashboard (the URL looks like https://formspree.io/f/xldabcde).
+  const FORMSPREE_ENDPOINT = "https://formspree.io/f/YOUR_FORM_ID";
+
   const form = document.querySelector("#contact-form");
   if (form) {
     const typeSel = form.querySelector("#c-type");
@@ -205,11 +209,12 @@
       syncBranches();
     }
 
-    form.addEventListener("submit", (e) => {
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
       const statusEl = form.querySelector(".form-status");
+      const submitBtn = form.querySelector('button[type="submit"]');
 
-      // Honeypot — if filled, silently drop
+      // Honeypot — if filled, silently pretend success and drop the request
       const hp = form.querySelector('[name="website"]');
       if (hp && hp.value) {
         statusEl.textContent = "Thank you. Your inquiry has been received.";
@@ -217,25 +222,50 @@
         return;
       }
 
+      // Build the submission payload
       const data = Object.fromEntries(new FormData(form).entries());
-      data.ts = Date.now();
-      data.id = "inq_" + Math.random().toString(36).slice(2, 10);
-      try {
-        const key = "mtfs_inquiries";
-        const list = JSON.parse(localStorage.getItem(key) || "[]");
-        list.unshift(data);
-        localStorage.setItem(key, JSON.stringify(list));
-      } catch (err) {
-        /* storage unavailable — fail quietly; server-side endpoint will handle in production */
-      }
+      const sessionType = data.type || "inquiry";
+      const inquirer = data.name || "(no name)";
+      // Pretty subject line for the email Formspree sends to your inbox
+      data._subject = `New ${sessionType} inquiry from ${inquirer}`;
+      // Make "reply" in Gmail go straight back to the inquirer
+      if (data.email) data._replyto = data.email;
 
-      statusEl.textContent =
-        "Thank you. Your inquiry has been received. Megan & Trent will be in touch within 48 business hours.";
-      form.reset();
-      syncBranches();
-      setTimeout(() => {
-        statusEl.textContent = "";
-      }, 9000);
+      statusEl.style.color = "var(--gold)";
+      statusEl.textContent = "Sending…";
+      if (submitBtn) submitBtn.disabled = true;
+
+      try {
+        const res = await fetch(FORMSPREE_ENDPOINT, {
+          method: "POST",
+          headers: { Accept: "application/json" },
+          body: new FormData(form),
+        });
+
+        if (res.ok) {
+          statusEl.style.color = "var(--gold)";
+          statusEl.textContent =
+            "Thank you. Your inquiry has been received. Megan & Trent will be in touch within 48 business hours.";
+          form.reset();
+          syncBranches();
+          setTimeout(() => {
+            statusEl.textContent = "";
+          }, 12000);
+        } else {
+          const body = await res.json().catch(() => ({}));
+          const msg =
+            (body && body.errors && body.errors.map((x) => x.message).join(", ")) ||
+            "Something went wrong sending your inquiry. Please email mtframephotography@gmail.com directly.";
+          statusEl.style.color = "#d97a6c";
+          statusEl.textContent = msg;
+        }
+      } catch (err) {
+        statusEl.style.color = "#d97a6c";
+        statusEl.textContent =
+          "Network error sending your inquiry. Please email mtframephotography@gmail.com directly.";
+      } finally {
+        if (submitBtn) submitBtn.disabled = false;
+      }
     });
   }
 
