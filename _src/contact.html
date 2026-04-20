@@ -35,11 +35,11 @@
 <!-- Pinterest -->
 <meta name="pinterest-rich-pin" content="true">
 
-<link rel="icon" href="assets/images/logo/favicon.ico">
+<link rel="icon" href="assets/images/logo/favicon.ico?v=3">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="image" href="assets/images/hero/contact.jpg" fetchpriority="high">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/styles.css?v=9">
+<link rel="stylesheet" href="assets/css/styles.css?v=14">
 
 <script type="application/ld+json">
 {
@@ -114,7 +114,7 @@
 </header>
 
 <section class="section">
-  <div class="container" style="display:grid; grid-template-columns: 1.2fr 1fr; gap:4rem;">
+  <div class="container contact-grid">
     <div class="reveal">
       <span class="eyebrow">Inquiry Form</span>
       <span class="rule"></span>
@@ -342,8 +342,34 @@
   </div>
 </section>
 
+<!-- Floating success modal shown after a successful Formspree submit -->
+<div id="success-modal" class="success-modal" role="dialog" aria-modal="true" aria-labelledby="success-modal-title" aria-hidden="true">
+  <div class="success-modal__card" role="document">
+    <button type="button" class="success-modal__x" data-close-success aria-label="Close">&times;</button>
+    <div class="success-modal__icon" aria-hidden="true">
+      <svg viewBox="0 0 64 64" width="64" height="64" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="32" cy="32" r="29" fill="none" stroke="currentColor" stroke-width="1.5" opacity=".5"/>
+        <path d="M20 33 L28 41 L44 23" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <span class="eyebrow">Inquiry Received</span>
+    <span class="rule" aria-hidden="true"></span>
+    <h2 id="success-modal-title">Thank you.</h2>
+    <p>
+      Your note has landed in our inbox. Megan &amp; Trent will be in touch
+      within 48 business hours with a full pricing guide and next steps.
+    </p>
+    <p class="success-modal__meta">
+      In the meantime, feel free to wander through our
+      <a href="galleries/weddings.html">wedding portfolio</a>
+      or the <a href="about.html">story behind the studio</a>.
+    </p>
+    <button type="button" class="btn success-modal__close" data-close-success>Close</button>
+  </div>
+</div>
+
 {{FOOTER}}
 
-<script src="assets/js/main.js?v=4"></script>
+<script src="assets/js/main.js?v=7"></script>
 </body>
 </html>

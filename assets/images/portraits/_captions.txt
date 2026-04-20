@@ -1,0 +1,16 @@
+# Caption file for the Portraits gallery.
+# One line per image: `filename: caption`
+# Blank lines and lines starting with # are ignored.
+# Images not listed here get an auto-generated caption.
+
+01.jpg: Sunset at the shore
+02.jpg: A quiet profile
+03.jpg: Golden hour dreaming
+04.jpg: Barefoot at the tide
+05.jpg: Last light
+06.jpg: Into the sky
+07.jpg: Looking up
+08.jpg: Red rock reflection
+09.jpg: The adventurer
+10.jpg: Summer siblings
+11.jpg: Brothers & sisters

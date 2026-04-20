@@ -1,0 +1,8 @@
+# Caption file for the Weddings gallery.
+# One line per image: `filename: caption`
+# Blank lines and lines starting with # are ignored.
+# Images not listed here get an auto-generated caption.
+
+01.jpg: Snow Canyon engagement
+02.jpg: A stolen moment
+03.jpg: Winter whispers

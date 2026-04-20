@@ -67,12 +67,13 @@ p  { margin: 0 0 1.1em; color: #dad3c4; max-width: 62ch; }
   margin-bottom: 1rem;
 }
 .rule {
-  display: inline-block;
+  display: block;
   width: 54px; height: 1px;
   background: var(--gold);
-  margin: 0 0 1.25rem;
+  margin: .35rem 0 1.25rem;
   opacity: .85;
 }
+.center .rule { margin-left: auto; margin-right: auto; }
 .italic { font-family: var(--serif); font-style: italic; color: var(--gold-bright); }
 
 /* ---------- Layout ---------- */
@@ -91,6 +92,63 @@ p  { margin: 0 0 1.1em; color: #dad3c4; max-width: 62ch; }
 .grid { display: grid; gap: clamp(1rem, 2vw, 2rem); }
 .center { text-align: center; }
 .max-readable { max-width: 60ch; margin-left: auto; margin-right: auto; }
+
+/* ---------- Responsive page layouts ---------- */
+/* Three-column philosophy grid on desktop → stacks on mobile */
+.philosophy-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem;
+}
+@media (max-width: 860px) {
+  .philosophy-grid { grid-template-columns: 1fr; gap: 2rem; }
+}
+
+/* Two-column contact grid (form + sidebar) on desktop → stacks on mobile */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 4rem;
+}
+@media (max-width: 900px) {
+  .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+}
+
+/* Numbered process timeline in about.html — tighten number badge on mobile */
+.process-list { list-style: none; padding: 0; margin: 2rem 0; counter-reset: step; }
+.process-list li {
+  padding: 1.2rem 0 1.2rem 3.2rem;
+  border-bottom: 1px solid var(--line);
+  position: relative;
+  counter-increment: step;
+}
+.process-list li:last-child { border-bottom: 0; }
+.process-list .step-num {
+  position: absolute;
+  left: 0;
+  top: 1.3rem;
+  font-family: var(--serif);
+  color: var(--gold);
+  font-size: 1.4rem;
+}
+.process-list h3 { margin-bottom: .3rem; }
+@media (max-width: 560px) {
+  .process-list li { padding-left: 2.4rem; }
+  .process-list .step-num { font-size: 1.2rem; top: 1.35rem; }
+}
+
+/* Hero CTA row — wrap + full-width buttons on narrow screens */
+.hero-cta-row {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+@media (max-width: 480px) {
+  .hero-cta-row { flex-direction: column; align-items: stretch; gap: .7rem; }
+  .hero-cta-row .btn { width: 100%; justify-content: center; }
+}
 
 /* ---------- Nav ---------- */
 .nav {
@@ -260,6 +318,11 @@ p  { margin: 0 0 1.1em; color: #dad3c4; max-width: 62ch; }
   background-size: cover; background-position: center;
   transform: scale(1.04);
   animation: heroBreathe 18s ease-in-out infinite alternate;
+}
+/* Homepage hero: landscape desktop crop → portrait mobile crop (keeps subject centered) */
+.hero__bg--home { background-image: url('../images/hero/home.jpg?v=4'); }
+@media (max-width: 720px) {
+  .hero__bg--home { background-image: url('../images/hero/home-mobile.jpg?v=5'); }
 }
 @keyframes heroBreathe {
   from { transform: scale(1.04); }
@@ -565,7 +628,7 @@ p  { margin: 0 0 1.1em; color: #dad3c4; max-width: 62ch; }
   max-width: 560px;
 }
 .form .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
-@media (max-width: 560px) { .form .row { grid-template-columns: 1fr; } }
+@media (max-width: 720px) { .form .row { grid-template-columns: 1fr; } }
 .field { display: flex; flex-direction: column; }
 .field label {
   font-size: .7rem;
@@ -976,3 +1039,134 @@ behold-widget {
    Once Behold is activated you can also simply delete the .ig-fallback
    block from index.html — either approach works. */
 body:has(behold-widget) .ig-fallback { display: none; }
+
+/* =========================================================================
+   Success modal — shown after a successful inquiry submission.
+   Fixed, full-viewport scrim + centered card. Fades + scales in,
+   respects prefers-reduced-motion.
+   ========================================================================= */
+.success-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: rgba(10, 9, 8, 0.82);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  animation: successFade .3s var(--ease);
+}
+.success-modal.open {
+  display: flex;
+}
+.success-modal__card {
+  position: relative;
+  max-width: 540px;
+  width: 100%;
+  background: var(--ink-2);
+  border: 1px solid var(--line);
+  padding: 3.4rem 2.6rem 2.8rem;
+  text-align: center;
+  box-shadow: 0 40px 80px rgba(0,0,0,.55), 0 0 0 1px rgba(201,169,97,.08);
+  animation: successRise .45s var(--ease);
+}
+.success-modal__card::before,
+.success-modal__card::after {
+  content: "";
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--gold);
+  opacity: .55;
+}
+.success-modal__card::before { top: 14px; left: 14px; border-right: 0; border-bottom: 0; }
+.success-modal__card::after  { bottom: 14px; right: 14px; border-left: 0; border-top: 0; }
+.success-modal__x {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  width: 34px;
+  height: 34px;
+  background: transparent;
+  border: 0;
+  color: var(--mute);
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: color .2s var(--ease);
+  padding: 0;
+}
+.success-modal__x:hover,
+.success-modal__x:focus-visible { color: var(--gold-bright); outline: none; }
+.success-modal__icon {
+  color: var(--gold-bright);
+  display: inline-flex;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  background: rgba(201,169,97,.08);
+  margin-bottom: 1.4rem;
+  animation: successPop .55s var(--ease) .1s both;
+}
+.success-modal__icon svg { display: block; }
+.success-modal__card .eyebrow { display: inline-block; }
+.success-modal__card .rule {
+  display: block;
+  margin: .35rem auto 1.1rem;
+}
+.success-modal__card h2 {
+  margin: 0 0 1rem;
+  font-size: clamp(2rem, 4vw, 2.6rem);
+}
+.success-modal__card p {
+  color: var(--paper);
+  opacity: .82;
+  font-size: 1rem;
+  line-height: 1.7;
+  margin: 0 0 1rem;
+}
+.success-modal__meta {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: .95rem !important;
+  color: var(--mute) !important;
+  opacity: 1 !important;
+  margin-bottom: 1.8rem !important;
+}
+.success-modal__meta a { color: var(--gold-bright); border-bottom: 1px solid var(--line); }
+.success-modal__meta a:hover { color: var(--gold); border-bottom-color: var(--gold); }
+.success-modal__close { min-width: 160px; }
+
+@keyframes successFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes successRise {
+  from { opacity: 0; transform: translateY(24px) scale(.96); }
+  to   { opacity: 1; transform: translateY(0)    scale(1);   }
+}
+@keyframes successPop {
+  0%   { transform: scale(.4); opacity: 0; }
+  60%  { transform: scale(1.08); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@media (max-width: 560px) {
+  .success-modal { padding: 1rem; }
+  .success-modal__card { padding: 2.6rem 1.6rem 2rem; }
+  .success-modal__card::before,
+  .success-modal__card::after { width: 20px; height: 20px; }
+  .success-modal__icon { width: 60px; height: 60px; margin-bottom: 1rem; }
+  .success-modal__icon svg { width: 52px; height: 52px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .success-modal,
+  .success-modal__card,
+  .success-modal__icon { animation: none; }
+}
+

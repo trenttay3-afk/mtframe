@@ -9,58 +9,68 @@ website/
 ├── index.html                  Home
 ├── about.html                  Studio story + process
 ├── investment.html             Pricing tiers (Weddings + Portraits/Maternity)
-├── contact.html                Inquiry form (saves to localStorage)
-├── galleries/                  Four masonry galleries + lightbox
+├── contact.html                Inquiry form (POSTs to Formspree)
+├── galleries/                  Four masonry galleries + lightbox (generated)
 │   ├── weddings.html
 │   ├── portraits.html
 │   ├── maternity.html
 │   └── events.html
-├── admin/
-│   ├── login.html              Demo login
-│   └── dashboard.html          Stats, gallery editor, inquiries, help
+├── _partials/                  Nav + footer (shared across pages)
+├── _src/                       Source templates — edit these, not the built HTML
+│   ├── index.html, about.html, investment.html, contact.html, 404.html
+│   └── galleries/{weddings,portraits,maternity,events}.html
 ├── assets/
 │   ├── css/styles.css          Brand system (gold on black, Cormorant + Inter)
 │   ├── js/main.js              Nav, reveal-on-scroll, lightbox, form handling
-│   ├── js/admin.js             Demo auth, gallery CRUD, inquiry view
 │   └── images/
-│       ├── hero/               Hero backgrounds per page (2400px)
+│       ├── hero/               Hero backgrounds (legacy — galleries now use their own folder)
 │       ├── weddings|portraits|maternity|events/
-│       │                        Each image has a full (1800px) + thumb (800px)
-│       └── logo/               mark.png, horizontal.png, favicons
+│       │    ├── 01.jpg, 02.jpg ...   Full-size photos (alphabetical = display order)
+│       │    ├── thumbs/              Generated ~800px thumbnails
+│       │    ├── hero.jpg             Optional — overrides the auto-picked hero
+│       │    └── _captions.txt        Optional caption mapping
+│       └── logo/
+├── build.py                    One-shot builder: pages + galleries + thumbnails
 ├── robots.txt
 ├── sitemap.xml                 With image:image entries for every gallery photo
-├── 404.html
-├── build_images.py             Regenerates the image set from raw originals
-└── build_galleries.py          Regenerates the four gallery pages
+└── 404.html
 ```
 
-## Running locally
+## Adding or reordering photos
+
+The galleries are **folder-driven**. To change what appears on the site:
+
+1. Drop a new photo into the gallery folder, e.g. `assets/images/weddings/`.
+2. Name it so the alphabetical order matches the display order — `01.jpg`,
+   `02.jpg`, `03.jpg` ... (or `a-couple.jpg`, `b-winter.jpg`, whatever you like).
+3. Optional: add a caption for it in the folder's `_captions.txt` file:
+   ```
+   01.jpg: Snow Canyon engagement
+   02.jpg: A stolen moment
+   ```
+   Any photo not listed there gets a sensible default caption.
+4. Optional: drop a `hero.jpg` in the folder to override the hero background
+   (otherwise the first image alphabetically becomes the hero).
+5. Commit and push. GitHub Actions runs `build.py`, which regenerates
+   thumbnails, gallery HTML, and schema.org metadata, and redeploys.
+
+To **remove** a photo, just delete the file from the folder.
+To **reorder**, rename the files so the alphabetical order matches the order
+you want.
+
+## Building locally
 
 ```bash
 cd website
+pip install Pillow
+python3 build.py
 python3 -m http.server 8765
 # then open http://127.0.0.1:8765
 ```
 
-## Admin
-
-Visit `/admin/login.html` (also linked in the footer) and sign in with:
-
-```
-username: admin
-password: mtframe2026
-```
-
-The dashboard is a **functional prototype** — session, gallery edits, and
-inquiries all persist in the browser's `localStorage` on this device only.
-Before shipping to production, swap three things:
-
-1. **Auth.** Replace the credential check in `assets/js/admin.js` with Firebase
-   Auth, Supabase, or a real backend session.
-2. **Gallery storage.** Replace the `mtfs_gallery` localStorage key with a
-   database (Supabase/Firestore) and move uploads to S3 / Cloudinary.
-3. **Inquiries.** Make the contact form POST to Formspree, Resend, or an API
-   route that emails `mtframephotography@gmail.com`.
+`build.py` renders every `_src/` template into the matching top-level HTML
+file, scans each gallery folder, regenerates missing/stale thumbnails into
+`thumbs/`, and emits the four gallery pages with fresh schema.org markup.
 
 ## Brand system
 
@@ -72,9 +82,9 @@ Before shipping to production, swap three things:
 
 - Per-page unique `<title>`, `<meta description>`, canonical URL, OG tags.
 - JSON-LD: `LocalBusiness`, `Person`, `WebSite`, `AboutPage`, `ContactPage`,
-  `Service`, and `ImageGallery` (with embedded `ImageObject`s).
+  `Service`, and `ImageGallery` (with embedded `ImageObject`s auto-generated
+  from each folder's contents).
 - `sitemap.xml` with `<image:image>` for every gallery photo.
-- `robots.txt` allows public pages, blocks `/admin/`.
 - Responsive, accessible (semantic landmarks, alt text, keyboard lightbox).
 
 ## Live Instagram feed
@@ -88,12 +98,9 @@ To swap accounts or change feed layout, edit the feed in your Behold
 dashboard. The widget is styled to match the site's black/gold palette
 via CSS custom properties at the bottom of `assets/css/styles.css`.
 
-## Regenerating assets
+## Contact form
 
-```bash
-# Re-slice images from originals (in the folder above this one):
-python3 build_images.py
-
-# Re-emit the four gallery pages from the spec:
-python3 build_galleries.py
-```
+The inquiry form POSTs to [Formspree](https://formspree.io) endpoint
+`xjgjowon`. Inquiries land in `mtframephotography@gmail.com`.
+Spam is filtered by a hidden honeypot field + Akismet. reCAPTCHA must stay
+**off** in the Formspree settings — it breaks AJAX submissions.
