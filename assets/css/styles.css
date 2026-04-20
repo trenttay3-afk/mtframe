@@ -92,6 +92,63 @@ p  { margin: 0 0 1.1em; color: #dad3c4; max-width: 62ch; }
 .center { text-align: center; }
 .max-readable { max-width: 60ch; margin-left: auto; margin-right: auto; }
 
+/* ---------- Responsive page layouts ---------- */
+/* Three-column philosophy grid on desktop → stacks on mobile */
+.philosophy-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem;
+}
+@media (max-width: 860px) {
+  .philosophy-grid { grid-template-columns: 1fr; gap: 2rem; }
+}
+
+/* Two-column contact grid (form + sidebar) on desktop → stacks on mobile */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 4rem;
+}
+@media (max-width: 900px) {
+  .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+}
+
+/* Numbered process timeline in about.html — tighten number badge on mobile */
+.process-list { list-style: none; padding: 0; margin: 2rem 0; counter-reset: step; }
+.process-list li {
+  padding: 1.2rem 0 1.2rem 3.2rem;
+  border-bottom: 1px solid var(--line);
+  position: relative;
+  counter-increment: step;
+}
+.process-list li:last-child { border-bottom: 0; }
+.process-list .step-num {
+  position: absolute;
+  left: 0;
+  top: 1.3rem;
+  font-family: var(--serif);
+  color: var(--gold);
+  font-size: 1.4rem;
+}
+.process-list h3 { margin-bottom: .3rem; }
+@media (max-width: 560px) {
+  .process-list li { padding-left: 2.4rem; }
+  .process-list .step-num { font-size: 1.2rem; top: 1.35rem; }
+}
+
+/* Hero CTA row — wrap + full-width buttons on narrow screens */
+.hero-cta-row {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+@media (max-width: 480px) {
+  .hero-cta-row { flex-direction: column; align-items: stretch; gap: .7rem; }
+  .hero-cta-row .btn { width: 100%; justify-content: center; }
+}
+
 /* ---------- Nav ---------- */
 .nav {
   position: fixed; top: 0; left: 0; right: 0;
@@ -570,7 +627,7 @@ p  { margin: 0 0 1.1em; color: #dad3c4; max-width: 62ch; }
   max-width: 560px;
 }
 .form .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
-@media (max-width: 560px) { .form .row { grid-template-columns: 1fr; } }
+@media (max-width: 720px) { .form .row { grid-template-columns: 1fr; } }
 .field { display: flex; flex-direction: column; }
 .field label {
   font-size: .7rem;
