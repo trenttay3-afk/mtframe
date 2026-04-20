@@ -1,0 +1,13 @@
+# Caption file for the Events gallery.
+# One line per image: `filename: caption`
+# Blank lines and lines starting with # are ignored.
+# Images not listed here get an auto-generated caption.
+
+01.jpg: Mommy to Bee
+02.jpg: Honey favor table
+03.jpg: Don't Say Baby
+04.jpg: The bridal party
+05.jpg: Garden gathering
+06.jpg: Gathered for Noah
+07.jpg: Under the tent
+08.jpg: Welcome-home cake

@@ -3,7 +3,6 @@
 
 User-agent: *
 Allow: /
-Disallow: /admin/
 Disallow: /*.json$
 
 # Friendly with image indexers — photography is the product

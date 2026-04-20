@@ -39,7 +39,7 @@
 
 <link rel="icon" href="../assets/images/logo/favicon.ico">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="image" href="../assets/images/weddings/01.jpg" fetchpriority="high">
+<link rel="preload" as="image" href="{{HERO_IMAGE}}" fetchpriority="high">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/css/styles.css?v=14">
 
@@ -75,9 +75,7 @@
       "name":"Weddings & Engagements · MT Frame Studio",
       "description":"A portfolio of wedding and engagement photography by MT Frame Studio. Editorial, timeless imagery for couples across New England and beyond.",
       "image":[
-  {"@type":"ImageObject","url":"https://mtframestudio.com/assets/images/weddings/01.jpg","name":"Snow Canyon engagement","creator":{"@type":"Organization","name":"Megan &amp; Trent, MT Frame Studio"}},
-  {"@type":"ImageObject","url":"https://mtframestudio.com/assets/images/weddings/02.jpg","name":"A stolen moment","creator":{"@type":"Organization","name":"Megan &amp; Trent, MT Frame Studio"}},
-  {"@type":"ImageObject","url":"https://mtframestudio.com/assets/images/weddings/03.jpg","name":"Winter whispers","creator":{"@type":"Organization","name":"Megan &amp; Trent, MT Frame Studio"}}
+{{SCHEMA_IMAGES}}
       ]
     }
   ]
@@ -86,33 +84,10 @@
 </head>
 <body>
 
-<!-- ============ NAV ============ -->
-<!-- ============ NAV ============ -->
-<nav class="nav" aria-label="Primary">
-  <a class="nav__brand" href="../index.html">
-    <img src="../assets/images/logo/mark.png?v=3" alt="MT Frame Studio mark">
-    <div>
-      <span>MT Frame Studio</span>
-      <small>Weddings &amp; Portraits</small>
-    </div>
-  </a>
-  <button class="nav__toggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
-  <ul class="nav__links">
-    <li><a href="../index.html" class="">Home</a></li>
-    <li><a href="../about.html" class="">About</a></li>
-    <li><a href="weddings.html" class="active">Weddings</a></li>
-    <li><a href="portraits.html" class="">Portraits</a></li>
-    <li><a href="maternity.html" class="">Maternity</a></li>
-    <li><a href="events.html" class="">Events</a></li>
-    <li><a href="../investment.html" class="">Investment</a></li>
-    <li><a href="#">Clients</a></li>
-    <li><a href="../contact.html" class=" nav__cta">Inquire</a></li>
-  </ul>
-</nav>
-
+{{NAV}}
 
 <header class="hero hero--page">
-  <div class="hero__bg" style="background-image:url('../assets/images/weddings/01.jpg')"></div>
+  <div class="hero__bg" style="background-image:url('{{HERO_IMAGE}}')"></div>
   <div class="hero__inner">
     <span class="hero__tag">Weddings</span>
     <h1>Weddings & <em>Engagements</em></h1>
@@ -128,18 +103,7 @@
 
   <div class="container">
     <div class="masonry reveal">
-    <figure data-full="../assets/images/weddings/01.jpg">
-      <img src="../assets/images/weddings/thumbs/01.jpg" alt="Snow Canyon engagement" loading="lazy" decoding="async" width="533" height="800">
-      <figcaption>Snow Canyon engagement</figcaption>
-    </figure>
-    <figure data-full="../assets/images/weddings/02.jpg">
-      <img src="../assets/images/weddings/thumbs/02.jpg" alt="A stolen moment" loading="lazy" decoding="async" width="533" height="800">
-      <figcaption>A stolen moment</figcaption>
-    </figure>
-    <figure data-full="../assets/images/weddings/03.jpg">
-      <img src="../assets/images/weddings/thumbs/03.jpg" alt="Winter whispers" loading="lazy" decoding="async" width="800" height="533">
-      <figcaption>Winter whispers</figcaption>
-    </figure>
+{{GALLERY_FIGURES}}
     </div>
   </div>
 </section>
@@ -163,49 +127,7 @@
   <div class="lightbox__cap"></div>
 </div>
 
-<!-- ============ FOOTER ============ -->
-<!-- ============ FOOTER ============ -->
-<footer class="footer">
-  <div class="footer__grid">
-    <div>
-      <div class="footer__brand">
-        <img src="../assets/images/logo/mark.png?v=3" alt="">
-        <div><span>MT Frame Studio</span><small>Weddings &amp; Portraits</small></div>
-      </div>
-      <p class="footer__tagline">Filling the MT Frames.</p>
-      <p style="font-size:.9rem;">Editorial, timeless photography for couples and families. Based in Alton, New Hampshire. Serving the Lakes Region, New England, and destinations worth chasing light with.</p>
-    </div>
-    <div>
-      <h4>Galleries</h4>
-      <ul>
-        <li><a href="weddings.html">Weddings</a></li>
-        <li><a href="portraits.html">Portraits</a></li>
-        <li><a href="maternity.html">Maternity</a></li>
-        <li><a href="events.html">Events</a></li>
-      </ul>
-    </div>
-    <div>
-      <h4>Studio</h4>
-      <ul>
-        <li><a href="../about.html">About</a></li>
-        <li><a href="../investment.html">Investment</a></li>
-        <li><a href="../contact.html">Contact</a></li>
-      </ul>
-    </div>
-    <div>
-      <h4>Connect</h4>
-      <ul>
-        <li><a href="mailto:mtframephotography@gmail.com">mtframephotography@gmail.com</a></li>
-        <li><a href="https://instagram.com/mtframestudio" target="_blank" rel="noopener">@mtframestudio</a></li>
-        <li><address style="font-style:normal;display:inline;">Alton, New Hampshire · Lakes Region</address></li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer__copy">
-    © <span data-year></span> MT Frame Studio · All photographs &amp; marks © Megan &amp; Trent · Site crafted with care.
-  </div>
-</footer>
-
+{{FOOTER}}
 
 <script src="../assets/js/main.js?v=7"></script>
 </body>

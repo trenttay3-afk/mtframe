@@ -1,0 +1,16 @@
+# Caption file for the Maternity gallery.
+# One line per image: `filename: caption`
+# Blank lines and lines starting with # are ignored.
+# Images not listed here get an auto-generated caption.
+
+01.jpg: A tender embrace
+02.jpg: Expecting joy
+03.jpg: The three of us
+04.jpg: A little honey
+05.jpg: Welcome, Noah
+06.jpg: Mother & daughter
+07.jpg: Generations
+08.jpg: Sisters & the bump
+09.jpg: Best friends forever
+10.jpg: Garden trio
+11.jpg: Family portrait

@@ -1,75 +1,286 @@
-"""Build the static site from _src/ + _partials/.
+"""Build the MT Frame Studio static site.
 
-Reads each source page from _src/, injects the shared nav + footer partials
-with the correct active link and path prefixes, and writes the final HTML
-to the repo root (where GitHub Pages serves it from).
+End-to-end pipeline:
+  1. For each gallery (weddings, portraits, maternity, events):
+       - Scan assets/images/<cat>/ for source JPGs (sorted alphabetically).
+       - Read optional _captions.txt mapping filename -> caption.
+       - Regenerate missing/stale thumbnails into assets/images/<cat>/thumbs/.
+       - Render _src/galleries/<cat>.html -> galleries/<cat>.html with the
+         figure list and JSON-LD ImageObject list injected.
+  2. For each regular page (index/about/investment/contact/404):
+       - Inject nav + footer partials and write to repo root.
 
-For /galleries/*.html we do NOT regenerate the whole page (their hand-edited
-meta and JSON-LD would be lost). Instead we surgically replace the <nav> and
-<footer> blocks in-place so nav/footer changes still propagate. Full gallery
-regeneration from the CATS spec is still available via build_galleries.py.
+Day-to-day update flow for the site owner:
+  • Drop a new photo into assets/images/weddings/ (or any gallery folder).
+    Name it in the order you want it to appear: 01.jpg, 02.jpg, 03.jpg...
+  • Optional: add a caption in the folder's _captions.txt file.
+  • Optional: drop a hero.jpg in the folder to override the hero image
+    (default is the alphabetically first image).
+  • Commit and push. GitHub Actions will rebuild everything, including
+    thumbnails, and redeploy.
 
-Usage:  python build.py
+Run locally with: python build.py
 """
+from __future__ import annotations
+
 from pathlib import Path
+import html
 import re
 import sys
 
-ROOT = Path(__file__).parent
+try:
+    from PIL import Image, ImageOps
+except ImportError:
+    print("error: Pillow is required. Run: pip install Pillow", file=sys.stderr)
+    sys.exit(1)
+
+ROOT = Path(__file__).resolve().parent
 PARTIALS = ROOT / "_partials"
 SRC = ROOT / "_src"
+IMAGES = ROOT / "assets" / "images"
 
-# Map of source filename -> (page_key, is_gallery_dir).
-# page_key is used to set the active nav link. is_gallery_dir is True for
-# pages that live under /galleries/ (changes the BASE / GALLERIES prefixes).
-PAGES = {
-    "index.html":      ("home",       False),
-    "about.html":      ("about",      False),
-    "investment.html": ("investment", False),
-    "contact.html":    ("contact",    False),
-    "404.html":        (None,         False),  # no nav/footer to inject
+# ---- Config -------------------------------------------------------------
+# Regular (non-gallery) pages. Each entry: filename -> active nav key.
+# None means don't inject a nav/footer (e.g. 404).
+PAGES: dict[str, str | None] = {
+    "index.html":      "home",
+    "about.html":      "about",
+    "investment.html": "investment",
+    "contact.html":    "contact",
+    "404.html":        None,
 }
 
-# Gallery pages we sync chrome into (see sync_gallery_chrome).
-GALLERIES = [
-    ("weddings.html",  "weddings"),
-    ("portraits.html", "portraits"),
-    ("maternity.html", "maternity"),
-    ("events.html",    "events"),
-]
+# Galleries. Every gallery has a source template in _src/galleries/<key>.html
+# and an image folder at assets/images/<key>/.
+GALLERIES: list[str] = ["weddings", "portraits", "maternity", "events"]
 
 # Active-link keys that can appear in the nav.
 NAV_KEYS = ["home", "about", "weddings", "portraits", "maternity", "events",
             "investment", "contact"]
 
+IMAGE_EXTS = {".jpg", ".jpeg", ".png"}
+
+# Thumbnail config: ~800px long edge, quality 78, progressive.
+THUMB_MAX = 800
+THUMB_QUALITY = 78
+
+# ---- Partial rendering --------------------------------------------------
 
 def render_partial(template: str, active_key: str | None, is_gallery: bool) -> str:
-    """Fill {{BASE}}, {{GALLERIES}}, and {{ACTIVE_*}} in a partial."""
+    """Fill {{BASE}}, {{GALLERIES}}, and {{ACTIVE_*}} in a nav/footer partial."""
     base = "../" if is_gallery else ""
     galleries = "" if is_gallery else "galleries/"
     out = template.replace("{{BASE}}", base).replace("{{GALLERIES}}", galleries)
     for key in NAV_KEYS:
-        token = "{{ACTIVE_" + key + "}}"
-        out = out.replace(token, "active" if key == active_key else "")
+        out = out.replace("{{ACTIVE_" + key + "}}", "active" if key == active_key else "")
     return out
 
 
-def build_page(src_path: Path, nav_tpl: str, footer_tpl: str,
-               page_key: str | None, is_gallery: bool) -> None:
+# ---- Gallery discovery --------------------------------------------------
+
+def list_gallery_images(gallery: str) -> list[Path]:
+    """Return the source JPGs for a gallery, alphabetically sorted.
+
+    Excludes:
+      - thumbs/ subdirectory contents (derivatives)
+      - legacy -thumb.jpg files (derivatives from the pre-2026 layout)
+      - dotfiles and our config files (_captions.txt, hero.jpg stays)
+    """
+    folder = IMAGES / gallery
+    if not folder.exists():
+        return []
+    images = []
+    for p in folder.iterdir():
+        if not p.is_file():
+            continue
+        if p.name.startswith("."):
+            continue
+        if p.name.startswith("_"):
+            continue
+        if p.name == "hero.jpg":
+            # hero.jpg is a special override — not part of the display grid
+            continue
+        if p.suffix.lower() not in IMAGE_EXTS:
+            continue
+        if p.stem.endswith("-thumb"):
+            # legacy flat-layout thumbs, ignore
+            continue
+        images.append(p)
+    images.sort(key=lambda p: p.name.lower())
+    return images
+
+
+def load_captions(gallery: str) -> dict[str, str]:
+    """Parse _captions.txt in a gallery folder.
+
+    Format: `filename: caption text` per line. Blank lines and lines
+    starting with `#` are ignored. Missing captions get a sensible
+    default at render time.
+    """
+    captions_file = IMAGES / gallery / "_captions.txt"
+    if not captions_file.exists():
+        return {}
+    out: dict[str, str] = {}
+    for line in captions_file.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#"):
+            continue
+        if ":" not in line:
+            continue
+        fname, caption = line.split(":", 1)
+        out[fname.strip()] = caption.strip()
+    return out
+
+
+def default_caption(gallery: str, index: int) -> str:
+    """Fallback caption for images not listed in _captions.txt.
+
+    Example: default_caption('weddings', 7) -> 'Wedding photograph 7 · MT Frame Studio'
+    The singular form ('Wedding') reads better as SEO alt text than 'Weddings'.
+    """
+    singular = {
+        "weddings": "Wedding",
+        "portraits": "Portrait",
+        "maternity": "Maternity",
+        "events": "Event",
+    }.get(gallery, gallery.title())
+    return f"{singular} photograph {index} · MT Frame Studio"
+
+
+# ---- Thumbnail generation -----------------------------------------------
+
+def ensure_thumb(source: Path, thumb: Path) -> bool:
+    """Regenerate `thumb` from `source` if missing or stale.
+
+    Returns True if a new thumbnail was written, False if the existing
+    one is already up to date.
+    """
+    if thumb.exists() and thumb.stat().st_mtime >= source.stat().st_mtime:
+        return False
+    thumb.parent.mkdir(parents=True, exist_ok=True)
+    with Image.open(source) as im:
+        im = ImageOps.exif_transpose(im)
+        if im.mode in ("RGBA", "P", "LA"):
+            im = im.convert("RGB")
+        w, h = im.size
+        if max(w, h) > THUMB_MAX:
+            if w >= h:
+                new_size = (THUMB_MAX, round(h * THUMB_MAX / w))
+            else:
+                new_size = (round(w * THUMB_MAX / h), THUMB_MAX)
+            im = im.resize(new_size, Image.LANCZOS)
+        im.save(thumb, "JPEG", quality=THUMB_QUALITY, optimize=True, progressive=True)
+    return True
+
+
+def image_dimensions(path: Path) -> tuple[int, int]:
+    """Return (width, height) for an image, via Pillow."""
+    with Image.open(path) as im:
+        im = ImageOps.exif_transpose(im)
+        return im.size
+
+
+# ---- Gallery rendering --------------------------------------------------
+
+def build_gallery(gallery: str, nav_tpl: str, footer_tpl: str) -> None:
+    """Render _src/galleries/<gallery>.html into galleries/<gallery>.html.
+
+    Injects the figure list, the JSON-LD ImageObject list, and the hero
+    image path, plus the standard nav/footer partials.
+    """
+    src_path = SRC / "galleries" / f"{gallery}.html"
+    if not src_path.exists():
+        print(f"skip galleries/{gallery}.html (no _src/galleries/{gallery}.html)")
+        return
+
+    images = list_gallery_images(gallery)
+    captions = load_captions(gallery)
+
+    # Regenerate thumbnails as needed
+    thumbs_dir = IMAGES / gallery / "thumbs"
+    rebuilt = 0
+    for img in images:
+        if ensure_thumb(img, thumbs_dir / img.name):
+            rebuilt += 1
+    if rebuilt:
+        print(f"  thumbs: regenerated {rebuilt}/{len(images)} for {gallery}")
+
+    # Determine hero. Priority:
+    #   1. assets/images/<gallery>/hero.jpg if present
+    #   2. First image alphabetically
+    hero_override = IMAGES / gallery / "hero.jpg"
+    if hero_override.exists():
+        hero_rel = f"../assets/images/{gallery}/hero.jpg"
+    elif images:
+        hero_rel = f"../assets/images/{gallery}/{images[0].name}"
+    else:
+        hero_rel = f"../assets/images/hero/{gallery}.jpg"  # final fallback
+
+    # Figure markup
+    fig_lines: list[str] = []
+    schema_lines: list[str] = []
+    for idx, img in enumerate(images, start=1):
+        caption = captions.get(img.name) or default_caption(gallery, idx)
+        caption_html = html.escape(caption, quote=True)
+        try:
+            w, h = image_dimensions(thumbs_dir / img.name)
+        except (FileNotFoundError, OSError):
+            w, h = (533, 800)
+        fig_lines.append(
+            f'    <figure data-full="../assets/images/{gallery}/{img.name}">\n'
+            f'      <img src="../assets/images/{gallery}/thumbs/{img.name}" '
+            f'alt="{caption_html}" loading="lazy" decoding="async" '
+            f'width="{w}" height="{h}">\n'
+            f'      <figcaption>{caption_html}</figcaption>\n'
+            f'    </figure>'
+        )
+        # JSON-LD ImageObject entry. Escape quotes with &quot; since the
+        # whole block is embedded as valid JSON inside <script type="application/ld+json">.
+        name_json = caption.replace('"', '\\"').replace("&", "&amp;")
+        schema_lines.append(
+            f'  {{"@type":"ImageObject",'
+            f'"url":"https://mtframestudio.com/assets/images/{gallery}/{img.name}",'
+            f'"name":"{name_json}",'
+            f'"creator":{{"@type":"Organization","name":"Megan &amp; Trent, MT Frame Studio"}}}}'
+        )
+
+    figures_block = "\n".join(fig_lines) if fig_lines else ""
+    schema_block = ",\n".join(schema_lines)
+
+    # Template fill
     src = src_path.read_text(encoding="utf-8")
+    src = src.replace("{{GALLERY_FIGURES}}", figures_block)
+    src = src.replace("{{SCHEMA_IMAGES}}", schema_block)
+    src = src.replace("{{HERO_IMAGE}}", hero_rel)
 
-    # Pages without nav/footer (like 404) get passed through unchanged.
     if "{{NAV}}" in src:
-        nav = render_partial(nav_tpl, page_key, is_gallery)
-        src = src.replace("{{NAV}}", nav)
+        src = src.replace("{{NAV}}", render_partial(nav_tpl, gallery, is_gallery=True))
     if "{{FOOTER}}" in src:
-        footer = render_partial(footer_tpl, None, is_gallery)
-        src = src.replace("{{FOOTER}}", footer)
+        src = src.replace("{{FOOTER}}", render_partial(footer_tpl, None, is_gallery=True))
 
-    out_path = ROOT / src_path.name
+    out_path = ROOT / "galleries" / f"{gallery}.html"
+    out_path.parent.mkdir(exist_ok=True)
     out_path.write_text(src, encoding="utf-8")
-    print(f"wrote {src_path.name}")
+    print(f"wrote galleries/{gallery}.html  ({len(images)} images)")
 
+
+# ---- Regular page rendering ---------------------------------------------
+
+def build_page(filename: str, active_key: str | None, nav_tpl: str, footer_tpl: str) -> None:
+    src_path = SRC / filename
+    if not src_path.exists():
+        print(f"skip {filename} (not in _src/)")
+        return
+    src = src_path.read_text(encoding="utf-8")
+    if "{{NAV}}" in src:
+        src = src.replace("{{NAV}}", render_partial(nav_tpl, active_key, is_gallery=False))
+    if "{{FOOTER}}" in src:
+        src = src.replace("{{FOOTER}}", render_partial(footer_tpl, None, is_gallery=False))
+    (ROOT / filename).write_text(src, encoding="utf-8")
+    print(f"wrote {filename}")
+
+
+# ---- Entry point --------------------------------------------------------
 
 def main() -> int:
     if not PARTIALS.exists() or not SRC.exists():
@@ -79,51 +290,16 @@ def main() -> int:
     nav_tpl = (PARTIALS / "nav.html").read_text(encoding="utf-8")
     footer_tpl = (PARTIALS / "footer.html").read_text(encoding="utf-8")
 
-    for filename, (page_key, is_gallery) in PAGES.items():
-        src_path = SRC / filename
-        if not src_path.exists():
-            print(f"skip {filename} (not in _src/)")
-            continue
-        build_page(src_path, nav_tpl, footer_tpl, page_key, is_gallery)
+    # Regular pages
+    for filename, active_key in PAGES.items():
+        build_page(filename, active_key, nav_tpl, footer_tpl)
 
-    sync_gallery_chrome(nav_tpl, footer_tpl)
+    # Galleries
+    for gallery in GALLERIES:
+        build_gallery(gallery, nav_tpl, footer_tpl)
+
     print("--- done ---")
     return 0
-
-
-def sync_gallery_chrome(nav_tpl: str, footer_tpl: str) -> None:
-    """In-place swap the <nav> and <footer> blocks on each gallery page
-    with the rendered partials. Everything else (meta tags, JSON-LD,
-    masonry, hero) is left untouched."""
-    nav_re = re.compile(r'<nav class="nav"[\s\S]*?</nav>')
-    footer_re = re.compile(r'<footer class="footer">[\s\S]*?</footer>')
-
-    galleries_dir = ROOT / "galleries"
-    for filename, active_key in GALLERIES:
-        path = galleries_dir / filename
-        if not path.exists():
-            print(f"skip galleries/{filename} (missing)")
-            continue
-        html = path.read_text(encoding="utf-8")
-
-        nav = render_partial(nav_tpl, active_key, is_gallery=True).strip()
-        footer = render_partial(footer_tpl, None, is_gallery=True).strip()
-
-        # Use lambda form so \\1, \\g<...> etc. in the replacement aren't
-        # interpreted as backreferences.
-        new_html, n_nav = nav_re.subn(lambda _: nav, html, count=1)
-        new_html, n_footer = footer_re.subn(lambda _: footer, new_html, count=1)
-
-        if n_nav == 0 or n_footer == 0:
-            print(f"warn: galleries/{filename} missing expected "
-                  f"nav ({n_nav}) or footer ({n_footer}) block; skipping")
-            continue
-
-        if new_html != html:
-            path.write_text(new_html, encoding="utf-8")
-            print(f"synced chrome: galleries/{filename}")
-        else:
-            print(f"unchanged:     galleries/{filename}")
 
 
 if __name__ == "__main__":
