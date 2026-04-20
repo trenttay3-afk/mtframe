@@ -183,9 +183,7 @@
   }
 
   /* ---------- Inquiry form: branching + honeypot + Formspree submit ---------- */
-  // Formspree endpoint — replace YOUR_FORM_ID with the form ID from your
-  // Formspree dashboard (the URL looks like https://formspree.io/f/xldabcde).
-  const FORMSPREE_ENDPOINT = "https://formspree.io/f/YOUR_FORM_ID";
+  const FORMSPREE_ENDPOINT = "https://formspree.io/f/xjgjowon";
 
   const form = document.querySelector("#contact-form");
   if (form) {
