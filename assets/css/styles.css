@@ -67,12 +67,13 @@ p  { margin: 0 0 1.1em; color: #dad3c4; max-width: 62ch; }
   margin-bottom: 1rem;
 }
 .rule {
-  display: inline-block;
+  display: block;
   width: 54px; height: 1px;
   background: var(--gold);
-  margin: 0 0 1.25rem;
+  margin: .35rem 0 1.25rem;
   opacity: .85;
 }
+.center .rule { margin-left: auto; margin-right: auto; }
 .italic { font-family: var(--serif); font-style: italic; color: var(--gold-bright); }
 
 /* ---------- Layout ---------- */
