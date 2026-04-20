@@ -1,0 +1,17 @@
+# Normalize line endings across platforms.
+# Git stores LF in the repo; checks out with the platform-native ending.
+# Prevents the CRLF/LF drift that kept showing every file as "modified" on Windows.
+
+* text=auto eol=lf
+
+# Binary files — never munge these.
+*.jpg  binary
+*.jpeg binary
+*.png  binary
+*.gif  binary
+*.webp binary
+*.ico  binary
+*.pdf  binary
+*.zip  binary
+*.woff  binary
+*.woff2 binary
