@@ -214,7 +214,7 @@
   }
 
   /* ---------- Inquiry form: branching + honeypot + Formspree submit ---------- */
-  const FORMSPREE_ENDPOINT = "https://formspree.io/f/xjgjowon";
+  const FORMSPREE_ENDPOINT = "https://formspree.io/f/mvznnvql";
 
   const form = document.querySelector("#contact-form");
   if (form) {
