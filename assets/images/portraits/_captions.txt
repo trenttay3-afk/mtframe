@@ -3,38 +3,36 @@
 # Blank lines and lines starting with # are ignored.
 # Images not listed here get an auto-generated caption.
 
-01.jpg: Sunset at the shore
-02.jpg: A quiet profile
-03.jpg: Golden hour dreaming
-04.jpg: Barefoot at the tide
-05.jpg: Last light
-06.jpg: Into the sky
-07.jpg: Looking up
-08.jpg: Red rock reflection
-09.jpg: The adventurer
-10.jpg: Summer siblings
-11.jpg: Brothers & sisters
-12.jpg: Kiley
-13.jpg: Kiley
-14.jpg: Kiley
-15.jpg: Kiley
-16.jpg: Kiley
-17.jpg: Kiley
-18.jpg: Kiley
-19.jpg: Kiley
-20.jpg: Kiley
-21.jpg: Kiley
-22.jpg: Kiley
-23.jpg: Kiley
-24.jpg: Kiley
-25.jpg: Kiley
-26.jpg: Kiley
-27.jpg: Kiley
-28.jpg: Kiley
-29.jpg: Kiley
-30.jpg: Kiley
-31.jpg: Kiley
-32.jpg: Kiley
-33.jpg: Kiley
-34.jpg: Kiley
-35.jpg: Kiley
+01.jpg: Glancing back at golden hour
+02.jpg: Eyes closed, salt air
+03.jpg: Soft light at the shoreline
+04.jpg: Quiet moment at dusk
+05.jpg: Bundled up together
+06.jpg: Arms wide at the water's edge
+07.jpg: First snowfall
+08.jpg: Mirror on the red rocks
+09.jpg: Standing tall on red stone
+10.jpg: Sun-kissed and smiling
+11.jpg: Barefoot on the sand
+12.jpg: Turning back toward the waves
+13.jpg: Warm light on her shoulders
+14.jpg: Golden hour glow
+15.jpg: Leaning into autumn
+16.jpg: Laughing on a log
+17.jpg: Resting on the old stone wall
+18.jpg: Front steps, best smiles
+19.jpg: Running to mom and dad
+20.jpg: A Sunday stroll
+21.jpg: Walk in the garden
+22.jpg: Hiding in the hostas
+23.jpg: Nose to nose
+24.jpg: Peek-a-boo behind the oak
+25.jpg: Running free on the lawn
+26.jpg: Held in golden light
+27.jpg: All smiles in the shade
+28.jpg: Explorer in the garden
+29.jpg: Side by side in the garden
+30.jpg: Curious little one
+31.jpg: Up in the air, sunshine everywhere
+32.jpg: Nestled in close
+33.jpg: Eye to eye with dad

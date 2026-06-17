@@ -3,26 +3,20 @@
 # Blank lines and lines starting with # are ignored.
 # Images not listed here get an auto-generated caption.
 
-01.jpg: A tender embrace
-02.jpg: Expecting joy
-03.jpg: The three of us
-04.jpg: A little honey
-05.jpg: Welcome, Noah
-06.jpg: Mother & daughter
-07.jpg: Generations
-08.jpg: Sisters & the bump
-09.jpg: Best friends forever
-10.jpg: Garden trio
-11.jpg: Family portrait
-12.jpg: Julia, Cam & Noah
-13.jpg: Julia, Cam & Noah
-14.jpg: Julia, Cam & Noah
-15.jpg: Julia, Cam & Noah
-16.jpg: Julia, Cam & Noah
-17.jpg: Julia, Cam & Noah
-18.jpg: Julia, Cam & Noah
-19.jpg: Julia, Cam & Noah
-20.jpg: Julia, Cam & Noah
-21.jpg: Julia, Cam & Noah
-22.jpg: Julia, Cam & Noah
-23.jpg: Julia, Cam & Noah
+01.jpg: The moment everything changed
+02.jpg: Together, and then there were three
+03.jpg: Best friends and a bump
+04.jpg: Surrounded by love
+05.jpg: Side by side in the ivy
+06.jpg: Drifting on the old timber bridge
+07.jpg: Through the garden arch
+08.jpg: Mom and her girl, seaside
+09.jpg: Barefoot at the water's edge
+10.jpg: Little hands on the new baby
+11.jpg: Gentle hello
+12.jpg: Resting on the jetty
+13.jpg: Leading the way
+14.jpg: Running to mama
+15.jpg: Kisses for two
+16.jpg: A quiet glance down
+17.jpg: Waiting at the shoreline

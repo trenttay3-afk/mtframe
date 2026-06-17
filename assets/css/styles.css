@@ -641,12 +641,12 @@ p  { margin: 0 0 1.1em; color: #dad3c4; max-width: 62ch; }
 }
 .form-section:last-of-type { border-bottom: none; }
 .form-section__label {
-  font-size: .65rem;
-  letter-spacing: .32em;
+  font-size: .72rem;
+  letter-spacing: .28em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--gold-bright);
   display: block;
-  margin-bottom: 1.6rem;
+  margin-bottom: 1.8rem;
 }
 
 /* Base field — used in admin forms */
@@ -681,8 +681,8 @@ p  { margin: 0 0 1.1em; color: #dad3c4; max-width: 62ch; }
   margin-bottom: 1.5rem;
 }
 .form .field--line label {
-  font-size: .65rem; letter-spacing: .28em; text-transform: uppercase;
-  color: var(--gold); margin-bottom: .45rem;
+  font-size: .7rem; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--mute); margin-bottom: .55rem;
   font-family: var(--sans); font-weight: 500;
 }
 .form .field--line input,
@@ -706,7 +706,7 @@ p  { margin: 0 0 1.1em; color: #dad3c4; max-width: 62ch; }
 }
 .form .field--line input::placeholder { color: var(--mute); font-size: .88rem; }
 .form .field--line textarea {
-  min-height: 130px; resize: vertical; padding-top: .55rem;
+  min-height: 160px; resize: vertical; padding-top: .55rem;
 }
 .form .field--line select option { background: var(--ink-2); color: var(--paper); }
 
