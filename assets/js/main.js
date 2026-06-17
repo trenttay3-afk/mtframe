@@ -299,7 +299,7 @@
           statusEl.style.color = "#d97a6c";
           statusEl.textContent =
             detail +
-            ". Please email mtframephotography@gmail.com directly.";
+            ". Please email trent@mtframestudio.com directly.";
           // Also log for the site owner's devtools
           console.warn("[MT Frame Studio] Formspree submission failed:", detail);
         }
@@ -308,7 +308,7 @@
         statusEl.textContent =
           "Network error: " +
           (err && err.message ? err.message : "unknown") +
-          ". Please email mtframephotography@gmail.com directly.";
+          ". Please email trent@mtframestudio.com directly.";
         console.warn("[MT Frame Studio] Formspree network error:", err);
       } finally {
         if (submitBtn) submitBtn.disabled = false;

@@ -101,6 +101,6 @@ via CSS custom properties at the bottom of `assets/css/styles.css`.
 ## Contact form
 
 The inquiry form POSTs to [Formspree](https://formspree.io) endpoint
-`xjgjowon`. Inquiries land in `mtframephotography@gmail.com`.
+`xjgjowon`. Inquiries land in `trent@mtframestudio.com`.
 Spam is filtered by a hidden honeypot field + Akismet. reCAPTCHA must stay
 **off** in the Formspree settings — it breaks AJAX submissions.
