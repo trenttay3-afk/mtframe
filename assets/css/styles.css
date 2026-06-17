@@ -633,9 +633,10 @@ p  { margin: 0 0 1.1em; color: #dad3c4; max-width: 62ch; }
 /* Form sections */
 .form-section {
   border: none; padding: 0; margin: 0;
+  padding-top: 2rem;
   padding-bottom: 2rem;
   margin-bottom: 2rem;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 2px solid rgba(201,169,97,.45);
   display: grid; gap: 0;
 }
 .form-section:last-of-type { border-bottom: none; }

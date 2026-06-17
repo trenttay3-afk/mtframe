@@ -39,7 +39,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="image" href="assets/images/hero/contact.jpg" fetchpriority="high">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/styles.css?v=16">
+<link rel="stylesheet" href="assets/css/styles.css?v=17">
 
 <script type="application/ld+json">
 {
@@ -302,15 +302,14 @@
             </div>
           </div>
           <div class="field field--line" style="grid-column:1/-1">
+            <label for="c-referral">How did you hear about us? <span class="field__opt">(optional)</span></label>
+            <input id="c-referral" name="referral" type="text" placeholder="Instagram, Google, friend referral…">
+          </div>
+          <div class="field field--line" style="grid-column:1/-1">
             <label for="c-msg">Tell us about your day, your people, the feeling you're after…</label>
             <textarea id="c-msg" name="message" required></textarea>
           </div>
         </div>
-
-        <label class="consent" for="c-consent">
-          <input id="c-consent" name="consent" type="checkbox" required>
-          <span>I'd like to be contacted about my inquiry and receive a pricing guide from MT Frame Studio.</span>
-        </label>
 
         <button type="submit" class="btn btn--solid btn--full">Send Inquiry &rarr;</button>
         <div class="form-status" aria-live="polite" role="status" style="color:var(--gold); font-size:.9rem; min-height:1.2em; text-align:center;"></div>
