@@ -39,7 +39,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="image" href="assets/images/hero/contact.jpg" fetchpriority="high">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/styles.css?v=15">
+<link rel="stylesheet" href="assets/css/styles.css?v=16">
 
 <script type="application/ld+json">
 {
@@ -156,22 +156,22 @@
           <span class="form-section__label">About You</span>
           <div class="row">
             <div class="field field--line">
-              <input id="c-name" name="name" type="text" required autocomplete="name" placeholder=" ">
               <label for="c-name">Your Name</label>
+              <input id="c-name" name="name" type="text" required autocomplete="name">
             </div>
             <div class="field field--line">
-              <input id="c-partner" name="partner" type="text" autocomplete="off" placeholder=" ">
               <label for="c-partner">Partner's Name <span class="field__opt">(optional)</span></label>
+              <input id="c-partner" name="partner" type="text" autocomplete="off">
             </div>
           </div>
           <div class="row">
             <div class="field field--line">
-              <input id="c-email" name="email" type="email" required autocomplete="email" placeholder=" ">
               <label for="c-email">Email Address</label>
+              <input id="c-email" name="email" type="email" required autocomplete="email">
             </div>
             <div class="field field--line">
-              <input id="c-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder=" ">
               <label for="c-phone">Phone <span class="field__opt">(optional)</span></label>
+              <input id="c-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel">
             </div>
           </div>
         </div>
@@ -180,7 +180,8 @@
         <div class="form-section">
           <span class="form-section__label">Your Session</span>
           <div class="row">
-            <div class="field field--line field--select">
+            <div class="field field--line">
+              <label for="c-type">Session Type</label>
               <select id="c-type" name="type" required>
                 <option value="Wedding">Wedding</option>
                 <option value="Engagement">Engagement</option>
@@ -189,12 +190,10 @@
                 <option value="Event">Event / Celebration</option>
                 <option value="Other">Something else</option>
               </select>
-              <label for="c-type">Session Type</label>
-              <span class="field__arrow" aria-hidden="true">&#8964;</span>
             </div>
             <div class="field field--line">
-              <input id="c-date" name="date" type="date" placeholder=" ">
               <label for="c-date">Ideal Date</label>
+              <input id="c-date" name="date" type="date">
             </div>
           </div>
         </div>
@@ -204,10 +203,11 @@
           <legend class="form-section__label">Wedding Details</legend>
           <div class="row">
             <div class="field field--line">
-              <input id="c-venue" name="venue" type="text" placeholder=" ">
               <label for="c-venue">Venue / Town</label>
+              <input id="c-venue" name="venue" type="text" placeholder="E.g. Alton Bay, Castle in the Clouds">
             </div>
-            <div class="field field--line field--select">
+            <div class="field field--line">
+              <label for="c-guests">Guest Count</label>
               <select id="c-guests" name="guests">
                 <option value="">Select…</option>
                 <option>Elopement / &lt; 20</option>
@@ -216,12 +216,11 @@
                 <option>150–250</option>
                 <option>250+</option>
               </select>
-              <label for="c-guests">Guest Count</label>
-              <span class="field__arrow" aria-hidden="true">&#8964;</span>
             </div>
           </div>
           <div class="row">
-            <div class="field field--line field--select">
+            <div class="field field--line">
+              <label for="c-hours">Coverage Needed</label>
               <select id="c-hours" name="hours">
                 <option value="">Not sure yet</option>
                 <option>Up to 4 hours</option>
@@ -229,10 +228,9 @@
                 <option>8 hours</option>
                 <option>10+ hours / full weekend</option>
               </select>
-              <label for="c-hours">Coverage Needed</label>
-              <span class="field__arrow" aria-hidden="true">&#8964;</span>
             </div>
-            <div class="field field--line field--select">
+            <div class="field field--line">
+              <label for="c-refer">How did you find us?</label>
               <select id="c-refer" name="referral">
                 <option value="">Select…</option>
                 <option>Google / search</option>
@@ -242,8 +240,6 @@
                 <option>Venue / vendor referral</option>
                 <option>Other</option>
               </select>
-              <label for="c-refer">How did you find us?</label>
-              <span class="field__arrow" aria-hidden="true">&#8964;</span>
             </div>
           </div>
         </fieldset>
@@ -253,12 +249,12 @@
           <legend class="form-section__label">Session Details</legend>
           <div class="row">
             <div class="field field--line">
-              <input id="c-subjects" name="subjects" type="text" placeholder=" ">
               <label for="c-subjects">Who's in the session?</label>
+              <input id="c-subjects" name="subjects" type="text" placeholder="E.g. couple, family of 5, solo">
             </div>
             <div class="field field--line">
-              <input id="c-loc2" name="location_p" type="text" placeholder=" ">
               <label for="c-loc2">Preferred Location</label>
+              <input id="c-loc2" name="location_p" type="text" placeholder="City, park, beach, or we can suggest">
             </div>
           </div>
         </fieldset>
@@ -268,18 +264,17 @@
           <legend class="form-section__label">Maternity Details</legend>
           <div class="row">
             <div class="field field--line">
-              <input id="c-due" name="due_date" type="date" placeholder=" ">
               <label for="c-due">Due Date</label>
+              <input id="c-due" name="due_date" type="date">
             </div>
-            <div class="field field--line field--select">
+            <div class="field field--line">
+              <label for="c-f48">Include Fresh 48 Newborn Visit?</label>
               <select id="c-f48" name="fresh48">
                 <option value="">Select…</option>
                 <option>Yes, include Fresh 48</option>
                 <option>Maternity only</option>
                 <option>Not sure yet</option>
               </select>
-              <label for="c-f48">Include Fresh 48 Newborn Visit?</label>
-              <span class="field__arrow" aria-hidden="true">&#8964;</span>
             </div>
           </div>
         </fieldset>
@@ -289,10 +284,11 @@
           <legend class="form-section__label">Event Details</legend>
           <div class="row">
             <div class="field field--line">
-              <input id="c-evtype" name="event_type" type="text" placeholder=" ">
               <label for="c-evtype">Event Type</label>
+              <input id="c-evtype" name="event_type" type="text" placeholder="Baby shower, rehearsal dinner, reunion…">
             </div>
-            <div class="field field--line field--select">
+            <div class="field field--line">
+              <label for="c-evhours">Coverage Needed</label>
               <select id="c-evhours" name="event_hours">
                 <option value="">Select…</option>
                 <option>2 hours</option>
@@ -300,8 +296,6 @@
                 <option>Half day</option>
                 <option>Full day</option>
               </select>
-              <label for="c-evhours">Coverage Needed</label>
-              <span class="field__arrow" aria-hidden="true">&#8964;</span>
             </div>
           </div>
         </fieldset>
@@ -311,10 +305,11 @@
           <span class="form-section__label">A Bit More</span>
           <div class="row">
             <div class="field field--line">
-              <input id="c-loc" name="location" type="text" placeholder=" ">
               <label for="c-loc">Location / Venue <span class="field__opt">(optional)</span></label>
+              <input id="c-loc" name="location" type="text" placeholder="City, venue, or 'still deciding'">
             </div>
-            <div class="field field--line field--select">
+            <div class="field field--line">
+              <label for="c-budget">Photography Investment <span class="field__opt">(optional)</span></label>
               <select id="c-budget" name="budget">
                 <option value="">Select a range…</option>
                 <option>Under $500</option>
@@ -326,13 +321,11 @@
                 <option>$8,000+</option>
                 <option>Still deciding / open to guidance</option>
               </select>
-              <label for="c-budget">Photography Investment <span class="field__opt">(optional)</span></label>
-              <span class="field__arrow" aria-hidden="true">&#8964;</span>
             </div>
           </div>
-          <div class="field field--line field--textarea">
-            <textarea id="c-msg" name="message" required placeholder=" "></textarea>
+          <div class="field field--line" style="grid-column:1/-1">
             <label for="c-msg">Tell us about your day, your people, the feeling you're after…</label>
+            <textarea id="c-msg" name="message" required></textarea>
           </div>
         </div>
 
