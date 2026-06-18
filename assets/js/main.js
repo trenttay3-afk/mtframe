@@ -316,36 +316,12 @@
     });
   }
 
-  /* ---------- Mobile masonry: orientation tagging + smart pairing ---------- */
-  const masonryFigs = Array.from(document.querySelectorAll(".masonry figure img")).map((img) => {
+  /* ---------- Mobile masonry: tag landscapes for full-width column-span ---------- */
+  document.querySelectorAll(".masonry figure img").forEach((img) => {
     const w = parseInt(img.getAttribute("width") || 0);
     const h = parseInt(img.getAttribute("height") || 0);
-    const fig = img.closest("figure");
-    const isPortrait = h > w;
-    fig.classList.add(isPortrait ? "orient-portrait" : "orient-landscape");
-    return { fig, isPortrait };
+    img.closest("figure").classList.add(h > w ? "orient-portrait" : "orient-landscape");
   });
-
-  // Walk the sequence: pair adjacent portraits; lone portraits go full-width
-  let waiting = null;
-  masonryFigs.forEach(({ fig, isPortrait }) => {
-    if (isPortrait) {
-      if (waiting) {
-        // Found a partner — both stay as 1-column. Clear the buffer.
-        waiting = null;
-      } else {
-        waiting = fig; // Hold this portrait until we know if it has a partner
-      }
-    } else {
-      // Landscape hit — flush any unpaired portrait to full width
-      if (waiting) {
-        waiting.classList.add("orient-full");
-        waiting = null;
-      }
-    }
-  });
-  // Last portrait with no partner → full width
-  if (waiting) waiting.classList.add("orient-full");
 
   /* ---------- Footer year ---------- */
   const yr = document.querySelector("[data-year]");
