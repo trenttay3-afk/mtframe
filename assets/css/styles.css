@@ -486,17 +486,11 @@ p  { margin: 0 0 1.1em; color: #dad3c4; max-width: 62ch; }
 @media (max-width: 900px) { .masonry { columns: 2; } }
 @media (max-width: 560px) {
   .masonry {
-    columns: 2;
-    column-gap: 0.35rem;
+    columns: 1;
   }
   .masonry figure {
-    margin: 0 0 0.35rem;
+    margin: 0 0 0.5rem;
     break-inside: avoid;
-  }
-  /* Landscape images span both columns so they read full-width */
-  .masonry figure.orient-landscape {
-    column-span: all;
-    margin-bottom: 0.35rem;
   }
 }
 .masonry figure {
