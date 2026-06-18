@@ -484,7 +484,16 @@ p  { margin: 0 0 1.1em; color: #dad3c4; max-width: 62ch; }
   column-gap: 1rem;
 }
 @media (max-width: 900px) { .masonry { columns: 2; } }
-@media (max-width: 560px) { .masonry { columns: 1; } }
+@media (max-width: 560px) {
+  .masonry {
+    columns: unset;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.35rem;
+  }
+  .masonry figure.orient-landscape { grid-column: span 2; }
+  .masonry figure { margin: 0; }
+}
 .masonry figure {
   margin: 0 0 1rem;
   break-inside: avoid;

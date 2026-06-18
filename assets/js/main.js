@@ -316,6 +316,15 @@
     });
   }
 
+  /* ---------- Mobile masonry: tag figures by orientation ---------- */
+  document.querySelectorAll(".masonry figure img").forEach((img) => {
+    const w = parseInt(img.getAttribute("width") || 0);
+    const h = parseInt(img.getAttribute("height") || 0);
+    if (w && h) {
+      img.closest("figure").classList.add(w >= h ? "orient-landscape" : "orient-portrait");
+    }
+  });
+
   /* ---------- Footer year ---------- */
   const yr = document.querySelector("[data-year]");
   if (yr) yr.textContent = new Date().getFullYear();
