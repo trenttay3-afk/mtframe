@@ -32,6 +32,7 @@
 
 <link rel="icon" href="../assets/images/logo/favicon.ico">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="image" href="../assets/images/hero/galleries.jpg" fetchpriority="high">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/css/styles.css?v=14">
 
@@ -93,7 +94,8 @@
 
 <!-- ============ HERO ============ -->
 <header class="hero hero--page">
-  <div class="hero__bg" style="background-image:url('../assets/images/weddings/01.jpg')"></div>
+  <div class="hero__bg" style="background-image:url('../assets/images/hero/galleries.jpg'); background-position: center 30%;"></div>
+  <style>@media(max-width:600px){.page-galleries .hero__bg{background-image:url('../assets/images/hero/galleries-mobile.jpg');}}</style>
   <div class="hero__inner">
     <span class="hero__tag">Portfolio</span>
     <h1>The <em>work.</em></h1>
