@@ -491,7 +491,8 @@ p  { margin: 0 0 1.1em; color: #dad3c4; max-width: 62ch; }
     grid-template-columns: 1fr 1fr;
     gap: 0.35rem;
   }
-  .masonry figure.orient-landscape { grid-column: span 2; }
+  .masonry figure.orient-landscape,
+  .masonry figure.orient-full { grid-column: span 2; }
   .masonry figure { margin: 0; }
 }
 .masonry figure {
