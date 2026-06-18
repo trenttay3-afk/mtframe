@@ -9,6 +9,11 @@
 (function () {
   "use strict";
 
+  // Signal that JS is active. Reveal animations only HIDE content when this
+  // class is present, so if the script ever fails to run the galleries stay
+  // fully visible rather than stuck at opacity:0.
+  document.documentElement.classList.add("js");
+
   const prefersReduced =
     window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -52,9 +57,27 @@
     });
   }
 
-  /* ---------- Reveal on scroll ---------- */
-  if (prefersReduced) {
-    document.querySelectorAll(".reveal").forEach((el) => el.classList.add("in"));
+  /* ---------- Reveal on scroll ----------
+     Gallery photos reveal individually with a gentle stagger. Each <figure>
+     is a small element, so the observer fires reliably regardless of how tall
+     the overall gallery is — this is the fix for galleries that stayed black
+     on mobile, where the old container-level reveal could never cross a 10%
+     visibility threshold on a very tall single-column grid. */
+  const figures = Array.prototype.slice.call(
+    document.querySelectorAll(".masonry figure")
+  );
+  figures.forEach((fig, i) => {
+    fig.classList.add("reveal", "reveal--fig");
+    // Stagger within a row group; cap the delay so later images aren't slow.
+    fig.style.setProperty("--reveal-delay", (i % 3) * 90 + "ms");
+  });
+
+  const revealEls = Array.prototype.slice
+    .call(document.querySelectorAll(".reveal"))
+    .concat(figures);
+
+  if (prefersReduced || !("IntersectionObserver" in window)) {
+    revealEls.forEach((el) => el.classList.add("in"));
   } else {
     const io = new IntersectionObserver(
       (entries) => {
@@ -65,9 +88,11 @@
           }
         });
       },
-      { threshold: 0.1, rootMargin: "0px 0px -80px 0px" }
+      // threshold 0: fire as soon as ANY part enters — never depends on the
+      // element being a fraction of its own (possibly huge) height.
+      { threshold: 0, rootMargin: "0px 0px -8% 0px" }
     );
-    document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+    revealEls.forEach((el) => io.observe(el));
   }
 
   /* ---------- Lightbox ---------- */

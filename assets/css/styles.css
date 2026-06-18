@@ -481,20 +481,21 @@ p  { margin: 0 0 1.1em; color: #dad3c4; max-width: 62ch; }
 /* ---------- Masonry gallery ---------- */
 .masonry {
   columns: 3;
-  column-gap: 1rem;
+  column-gap: 1.1rem;
 }
-@media (max-width: 900px) { .masonry { columns: 2; } }
+@media (max-width: 900px) { .masonry { columns: 2; column-gap: .9rem; } }
 @media (max-width: 560px) {
   .masonry {
     columns: 1;
+    column-gap: 0;
   }
   .masonry figure {
-    margin: 0 0 0.5rem;
+    margin: 0 0 .9rem;
     break-inside: avoid;
   }
 }
 .masonry figure {
-  margin: 0 0 1rem;
+  margin: 0 0 1.1rem;
   break-inside: avoid;
   position: relative;
   overflow: hidden;
@@ -503,6 +504,8 @@ p  { margin: 0 0 1.1em; color: #dad3c4; max-width: 62ch; }
 }
 .masonry img {
   width: 100%;
+  height: auto;
+  display: block; /* kills the inline-image descender gap that showed a dark sliver */
   transition: transform .6s var(--ease), filter .4s var(--ease);
   filter: brightness(.94);
 }
@@ -523,6 +526,15 @@ p  { margin: 0 0 1.1em; color: #dad3c4; max-width: 62ch; }
   transition: opacity .3s var(--ease);
 }
 .masonry figure:hover figcaption { opacity: 1; }
+/* Touch devices have no hover state — keep captions gently visible so they
+   aren't lost, with a softer gradient so the image still leads. */
+@media (hover: none) {
+  .masonry figcaption {
+    opacity: 1;
+    background: linear-gradient(to top, rgba(10,9,8,.72), transparent 72%);
+    font-size: .72rem;
+  }
+}
 
 /* ---------- Lightbox ---------- */
 .lightbox {
@@ -907,12 +919,20 @@ p  { margin: 0 0 1.1em; color: #dad3c4; max-width: 62ch; }
   color: var(--mute);
 }
 
-/* ---------- Reveal on scroll ---------- */
+/* ---------- Reveal on scroll ----------
+   The hidden state is gated behind the `.js` class (added by main.js on load).
+   With no JS, or if the script fails, content renders fully visible instead of
+   being stranded at opacity:0 — this is the safety net for the galleries. */
 .reveal {
-  opacity: 0;
-  transform: translateY(24px);
   transition: opacity .8s var(--ease), transform .8s var(--ease);
 }
+.js .reveal {
+  opacity: 0;
+  transform: translateY(24px);
+}
+/* Gallery photos rise a touch less and stagger per item for an elegant cascade */
+.masonry figure.reveal { transition-delay: var(--reveal-delay, 0ms); }
+.js .masonry figure.reveal { transform: translateY(16px); }
 .reveal.in {
   opacity: 1;
   transform: translateY(0);
