@@ -324,6 +324,11 @@ p  { margin: 0 0 1.1em; color: #dad3c4; max-width: 62ch; }
 @media (max-width: 720px) {
   .hero__bg--home { background-image: url('../images/hero/home-mobile.jpg?v=5'); }
 }
+/* Portraits hero: subject's head sits high in the frame. On the wide/short
+   desktop hero a centered crop clips the top of her head — anchor higher so
+   the full head stays in frame (with headroom for the breathe zoom). Harmless
+   on mobile, where the taller hero shows the image's full height already. */
+.hero__bg--portraits { background-position: center 30%; }
 @keyframes heroBreathe {
   from { transform: scale(1.04); }
   to   { transform: scale(1.10); }
