@@ -329,6 +329,9 @@ p  { margin: 0 0 1.1em; color: #dad3c4; max-width: 62ch; }
    the full head stays in frame (with headroom for the breathe zoom). Harmless
    on mobile, where the taller hero shows the image's full height already. */
 .hero__bg--portraits { background-position: center 30%; }
+/* Weddings hero: portrait shot of the couple embracing; their faces sit in the
+   upper-middle. Anchor the wide desktop crop higher so both faces stay framed. */
+.hero__bg--weddings { background-position: center 35%; }
 @keyframes heroBreathe {
   from { transform: scale(1.04); }
   to   { transform: scale(1.10); }
@@ -671,6 +674,29 @@ p  { margin: 0 0 1.1em; color: #dad3c4; max-width: 62ch; }
   color: var(--gold-bright);
   display: block;
   margin-bottom: 1.8rem;
+}
+
+/* Package context banner — shown when arriving from an Investment collection */
+.package-notice {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem 1rem;
+  margin-bottom: 2rem;
+  padding: .9rem 1.2rem;
+  background: var(--ink-2);
+  border-left: 2px solid var(--gold);
+  font-size: .92rem;
+  color: #e8e1d2;
+}
+.package-notice strong { color: var(--gold-bright); font-weight: 500; }
+.package-notice__change {
+  font-size: .68rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  white-space: nowrap;
 }
 
 /* Base field — used in admin forms */

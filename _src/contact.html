@@ -39,7 +39,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="image" href="assets/images/hero/contact.jpg" fetchpriority="high">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/styles.css?v=21">
+<link rel="stylesheet" href="assets/css/styles.css?v=22">
 
 <script type="application/ld+json">
 {
@@ -128,6 +128,14 @@
           <label for="c-website">Website</label>
           <input id="c-website" name="website" type="text" tabindex="-1" autocomplete="off">
         </div>
+
+        <!-- Package context — shown only when arriving from an Investment collection.
+             Populated by main.js from the ?package= query parameter. -->
+        <div id="package-notice" class="package-notice" hidden>
+          <span>You're inquiring about the <strong data-package-name></strong> collection — we've noted it below.</span>
+          <a href="investment.html" class="package-notice__change">View all collections</a>
+        </div>
+        <input type="hidden" name="package" id="c-package">
 
         <!-- Section: About You -->
         <div class="form-section">
@@ -369,6 +377,6 @@
 
 {{FOOTER}}
 
-<script src="assets/js/main.js?v=11"></script>
+<script src="assets/js/main.js?v=12"></script>
 </body>
 </html>

@@ -258,6 +258,56 @@
         });
       });
     };
+    /* Pre-fill from query params when arriving from an Investment collection,
+       e.g. contact.html?type=Wedding&package=The%20Heirloom. Sets the session
+       type (which reveals the matching branch), records the package for the
+       submission, suggests a budget range, and shows a small confirmation. */
+    const prefillFromQuery = () => {
+      const params = new URLSearchParams(window.location.search);
+
+      const typeVal = params.get("type");
+      if (typeVal && typeSel) {
+        const opt = Array.prototype.find.call(
+          typeSel.options,
+          (o) => o.value.toLowerCase() === typeVal.toLowerCase()
+        );
+        if (opt) typeSel.value = opt.value;
+      }
+
+      const pkg = params.get("package");
+      if (pkg) {
+        const pkgInput = form.querySelector("#c-package");
+        if (pkgInput) pkgInput.value = pkg;
+
+        const notice = document.querySelector("#package-notice");
+        if (notice) {
+          const nameEl = notice.querySelector("[data-package-name]");
+          if (nameEl) nameEl.textContent = pkg;
+          notice.hidden = false;
+        }
+
+        // Suggest a budget range to match the chosen collection (editable).
+        const budgetByPackage = {
+          "The Sonnet": "$1,000–$2,000",
+          "The Heirloom": "$2,000–$3,500",
+          "The Archive": "$3,500–$5,000",
+          "Mini Session": "Under $500",
+          "Signature Session": "$500–$1,000",
+          "Maternity & Fresh 48": "$500–$1,000",
+        };
+        const budgetSel = form.querySelector("#c-budget");
+        const wanted = budgetByPackage[pkg];
+        if (budgetSel && wanted) {
+          const match = Array.prototype.find.call(
+            budgetSel.options,
+            (o) => o.value === wanted || o.text === wanted
+          );
+          if (match) budgetSel.value = match.value || match.text;
+        }
+      }
+    };
+    prefillFromQuery();
+
     if (typeSel) {
       typeSel.addEventListener("change", syncBranches);
       syncBranches();
