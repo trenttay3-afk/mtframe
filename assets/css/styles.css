@@ -485,14 +485,22 @@ p  { margin: 0 0 1.1em; color: #dad3c4; max-width: 62ch; }
 }
 @media (max-width: 900px) { .masonry { columns: 2; column-gap: .9rem; } }
 @media (max-width: 560px) {
+  /* Full-bleed single column — photos run edge-to-edge for an immersive,
+     editorial feel. Negative margins cancel the .container side padding so
+     each image spans the full screen width. */
   .masonry {
     columns: 1;
     column-gap: 0;
+    margin-left: -1.5rem;
+    margin-right: -1.5rem;
   }
   .masonry figure {
-    margin: 0 0 .9rem;
+    margin: 0 0 .5rem;
     break-inside: avoid;
+    background: var(--ink);
   }
+  .masonry img { filter: none; } /* full presence — no hover to brighten on touch */
+  .masonry figcaption { display: none; } /* captions hidden on mobile; they live in the lightbox */
 }
 .masonry figure {
   margin: 0 0 1.1rem;
@@ -526,15 +534,6 @@ p  { margin: 0 0 1.1em; color: #dad3c4; max-width: 62ch; }
   transition: opacity .3s var(--ease);
 }
 .masonry figure:hover figcaption { opacity: 1; }
-/* Touch devices have no hover state — keep captions gently visible so they
-   aren't lost, with a softer gradient so the image still leads. */
-@media (hover: none) {
-  .masonry figcaption {
-    opacity: 1;
-    background: linear-gradient(to top, rgba(10,9,8,.72), transparent 72%);
-    font-size: .72rem;
-  }
-}
 
 /* ---------- Lightbox ---------- */
 .lightbox {
