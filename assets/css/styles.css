@@ -775,6 +775,7 @@ h1 em, h2 em, h3 em, h1 .italic, h2 .italic, h3 .italic { font-family: var(--ser
   font-size: .92rem;
   color: #ebe3d6;
 }
+.package-notice[hidden] { display: none; }
 .package-notice strong { color: var(--gold-bright); font-weight: 500; }
 .package-notice__change {
   font-size: .68rem;
@@ -846,6 +847,49 @@ h1 em, h2 em, h3 em, h1 .italic, h2 .italic, h3 .italic { font-family: var(--ser
 .form .field--line select option { background: var(--ink-2); color: var(--paper); }
 
 .btn--full { width: 100%; text-align: center; justify-content: center; }
+
+/* ---------- Inquiry form (clean) ----------
+   Outlined fields on the Linen ground, sentence-case labels, three numbered steps. */
+.form--clean { max-width: 620px; gap: 0; }
+.form-step { display: grid; gap: 1.1rem; padding-bottom: 1.8rem; margin-bottom: 1.8rem; border-bottom: 1px solid var(--line); }
+.form-step--last { border-bottom: 0; margin-bottom: 1.4rem; padding-bottom: 0; }
+.form-step__title {
+  display: flex; align-items: baseline; gap: .7rem; margin: 0 0 .2rem;
+  font-family: var(--sans); font-size: .78rem; font-weight: 500;
+  letter-spacing: .22em; text-transform: uppercase; color: var(--paper);
+}
+.form-step__title span { font-family: var(--display); font-stretch: 72%; font-weight: 400; font-size: 1.35rem; letter-spacing: 0; color: var(--gold); }
+.f-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+@media (max-width: 720px) { .f-row { grid-template-columns: 1fr; } }
+.f-field { display: flex; flex-direction: column; gap: .4rem; min-width: 0; }
+.f-field--half { max-width: calc(50% - .55rem); }
+@media (max-width: 720px) { .f-field--half { max-width: none; } }
+.f-field label { font-family: var(--sans); font-size: .9rem; font-weight: 500; color: var(--paper); letter-spacing: .01em; }
+.f-field abbr { text-decoration: none; color: var(--gold); margin-left: .1rem; }
+.f-opt { font-weight: 400; font-size: .8rem; color: var(--mute); margin-left: .35rem; }
+.f-field input, .f-field select, .f-field textarea {
+  width: 100%; font-family: var(--sans); font-size: 1rem; font-weight: 400; line-height: 1.4;
+  color: #231e1a; background: #f7f2ea; border: 1px solid #c9bba4; border-radius: 2px;
+  padding: .8rem .95rem; transition: border-color .2s var(--ease), box-shadow .2s var(--ease);
+  -webkit-appearance: none; appearance: none;
+}
+.f-field textarea { min-height: 150px; resize: vertical; }
+.f-field input::placeholder, .f-field textarea::placeholder { color: #8f8372; }
+.f-field select {
+  padding-right: 2.4rem; cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%236b5329' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 1rem center;
+}
+.f-field select option { background: #f7f2ea; color: #231e1a; }
+.f-field input:hover, .f-field select:hover, .f-field textarea:hover { border-color: #a8957a; }
+.f-field input:focus, .f-field select:focus, .f-field textarea:focus { outline: none; border-color: #6b5329; box-shadow: 0 0 0 3px rgba(107,83,41,.15); }
+.form--clean .branch { border: 0; padding: 0; margin: 0; background: none; display: grid; gap: 1.1rem; min-width: 0; }
+.form--clean .branch legend { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.form--clean .package-notice { margin-bottom: 1.8rem; }
+.section--light .package-notice { background: #e2d8c7; color: #2e2620; }
+.section--light .package-notice strong { color: #6b5329; }
+.form-note { margin: .8rem 0 0; text-align: center; font-size: .85rem; color: var(--mute); }
+.form--clean .form-status { min-height: 1.2em; margin-top: .4rem; text-align: center; font-size: .9rem; color: var(--gold); }
 
 /* ---------- Admin UI ---------- */
 .admin-wrap {

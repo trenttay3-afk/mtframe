@@ -39,7 +39,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="image" href="assets/images/hero/contact.jpg?v=2" fetchpriority="high">
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/styles.css?v=32">
+<link rel="stylesheet" href="assets/css/styles.css?v=33">
 
 <script type="application/ld+json">
 {
@@ -131,7 +131,7 @@
   </div>
 </header>
 
-<section class="section">
+<section class="section section--light">
   <div class="container contact-grid">
     <div class="reveal">
       <span class="eyebrow">Inquiry Form</span>
@@ -140,168 +140,120 @@
       <p>Fill in what you know. You don't need to have everything figured out yet.
          We'll reply within 48 business hours with a full pricing guide and next steps.</p>
 
-      <form id="contact-form" class="form" novalidate aria-label="Inquiry form">
+      <form id="contact-form" class="form form--clean" novalidate aria-label="Inquiry form">
         <!-- Honeypot (hidden from humans; bots will fill it) -->
         <div class="hp-field" aria-hidden="true">
           <label for="c-website">Website</label>
           <input id="c-website" name="website" type="text" tabindex="-1" autocomplete="off">
         </div>
 
-        <!-- Package context — shown only when arriving from an Investment collection.
-             Populated by main.js from the ?package= query parameter. -->
+        <!-- Package context — shown only when arriving from an Investment collection (main.js, ?package=) -->
         <div id="package-notice" class="package-notice" hidden>
-          <span>You're inquiring about the <strong data-package-name></strong> collection — we've noted it below.</span>
+          <span>You're inquiring about the <strong data-package-name></strong> collection.</span>
           <a href="investment.html" class="package-notice__change">View all collections</a>
         </div>
         <input type="hidden" name="package" id="c-package">
 
-        <!-- Section: About You -->
-        <div class="form-section">
-          <span class="form-section__label">About You</span>
-          <div class="row">
-            <div class="field field--line">
-              <label for="c-name">Your Name</label>
-              <input id="c-name" name="name" type="text" required autocomplete="name">
-            </div>
-            <div class="field field--line">
-              <label for="c-partner">Partner's Name <span class="field__opt">(optional)</span></label>
-              <input id="c-partner" name="partner" type="text" autocomplete="off">
-            </div>
+        <div class="form-step">
+          <p class="form-step__title"><span>01</span> About you</p>
+          <div class="f-field">
+            <label for="c-name">Your name(s) <abbr title="required">*</abbr></label>
+            <input id="c-name" name="name" type="text" required autocomplete="name" placeholder="e.g. Sarah &amp; James">
           </div>
-          <div class="row">
-            <div class="field field--line">
-              <label for="c-email">Email Address</label>
-              <input id="c-email" name="email" type="email" required autocomplete="email">
+          <div class="f-row">
+            <div class="f-field">
+              <label for="c-email">Email <abbr title="required">*</abbr></label>
+              <input id="c-email" name="email" type="email" required autocomplete="email" placeholder="you@email.com">
             </div>
-            <div class="field field--line">
-              <label for="c-phone">Phone <span class="field__opt">(optional)</span></label>
+            <div class="f-field">
+              <label for="c-phone">Phone <span class="f-opt">optional</span></label>
               <input id="c-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel">
             </div>
           </div>
         </div>
 
-        <!-- Section: Your Session -->
-        <div class="form-section">
-          <span class="form-section__label">Your Session</span>
-          <div class="row">
-            <div class="field field--line">
-              <label for="c-type">Session Type</label>
+        <div class="form-step">
+          <p class="form-step__title"><span>02</span> Your session</p>
+          <div class="f-row">
+            <div class="f-field">
+              <label for="c-type">Session type <abbr title="required">*</abbr></label>
               <select id="c-type" name="type" required>
                 <option value="Wedding">Wedding</option>
                 <option value="Engagement">Engagement</option>
-                <option value="Portrait">Portrait</option>
-                <option value="Maternity">Maternity &amp; Newborn</option>
-                <option value="Event">Event / Celebration</option>
+                <option value="Portrait">Portrait or family</option>
+                <option value="Maternity">Maternity &amp; newborn</option>
+                <option value="Event">Event or celebration</option>
                 <option value="Other">Something else</option>
               </select>
             </div>
-            <div class="field field--line">
-              <label for="c-date">Ideal Date</label>
-              <input id="c-date" name="date" type="date">
+            <div class="f-field">
+              <label for="c-date">Date or season</label>
+              <input id="c-date" name="date" type="text" placeholder="e.g. June 2027, or fall">
             </div>
           </div>
-        </div>
+          <div class="f-field">
+            <label for="c-loc">Location or venue</label>
+            <input id="c-loc" name="location" type="text" placeholder="Town, venue, or 'still deciding'">
+          </div>
 
-        <!-- Wedding-only branch -->
-        <fieldset class="branch form-section" data-branch="Wedding" hidden>
-          <legend class="form-section__label">Wedding Details</legend>
-          <div class="row">
-            <div class="field field--line">
-              <label for="c-venue">Venue / Town</label>
-              <input id="c-venue" name="venue" type="text" placeholder="E.g. Alton Bay, Castle in the Clouds">
-            </div>
-            <div class="field field--line">
-              <label for="c-guests">Guest Count</label>
+          <!-- Branches: one or two extra fields that match the session type -->
+          <fieldset class="branch" data-branch="Wedding" hidden>
+            <legend>Wedding details</legend>
+            <div class="f-field f-field--half">
+              <label for="c-guests">Guest count</label>
               <select id="c-guests" name="guests">
                 <option value="">Select…</option>
-                <option>Elopement / &lt; 20</option>
+                <option>Elopement / under 20</option>
                 <option>20–75</option>
                 <option>75–150</option>
                 <option>150–250</option>
                 <option>250+</option>
               </select>
             </div>
-          </div>
-          <div class="row">
-            <div class="field field--line">
-              <label for="c-hours">Coverage Needed</label>
-              <select id="c-hours" name="hours">
-                <option value="">Not sure yet</option>
-                <option>Up to 4 hours</option>
-                <option>6 hours</option>
-                <option>8 hours</option>
-                <option>10+ hours / full weekend</option>
-              </select>
-            </div>
-          </div>
-        </fieldset>
-
-        <!-- Portrait / Engagement branch -->
-        <fieldset class="branch form-section" data-branch="Portrait,Engagement" hidden>
-          <legend class="form-section__label">Session Details</legend>
-          <div class="row">
-            <div class="field field--line">
+          </fieldset>
+          <fieldset class="branch" data-branch="Portrait,Engagement" hidden>
+            <legend>Session details</legend>
+            <div class="f-field">
               <label for="c-subjects">Who's in the session?</label>
-              <input id="c-subjects" name="subjects" type="text" placeholder="E.g. couple, family of 5, solo">
+              <input id="c-subjects" name="subjects" type="text" placeholder="e.g. couple, family of five, solo">
             </div>
-            <div class="field field--line">
-              <label for="c-loc2">Preferred Location</label>
-              <input id="c-loc2" name="location_p" type="text" placeholder="City, park, beach, or we can suggest">
+          </fieldset>
+          <fieldset class="branch" data-branch="Maternity" hidden>
+            <legend>Maternity details</legend>
+            <div class="f-row">
+              <div class="f-field">
+                <label for="c-due">Due date</label>
+                <input id="c-due" name="due_date" type="text" placeholder="e.g. March 2027">
+              </div>
+              <div class="f-field">
+                <label for="c-f48">Add a Fresh 48 newborn visit?</label>
+                <select id="c-f48" name="fresh48">
+                  <option value="">Select…</option>
+                  <option>Yes, include Fresh 48</option>
+                  <option>Maternity only</option>
+                  <option>Not sure yet</option>
+                </select>
+              </div>
             </div>
-          </div>
-        </fieldset>
-
-        <!-- Maternity branch -->
-        <fieldset class="branch form-section" data-branch="Maternity" hidden>
-          <legend class="form-section__label">Maternity Details</legend>
-          <div class="row">
-            <div class="field field--line">
-              <label for="c-due">Due Date</label>
-              <input id="c-due" name="due_date" type="date">
-            </div>
-            <div class="field field--line">
-              <label for="c-f48">Include Fresh 48 Newborn Visit?</label>
-              <select id="c-f48" name="fresh48">
-                <option value="">Select…</option>
-                <option>Yes, include Fresh 48</option>
-                <option>Maternity only</option>
-                <option>Not sure yet</option>
-              </select>
-            </div>
-          </div>
-        </fieldset>
-
-        <!-- Event branch -->
-        <fieldset class="branch form-section" data-branch="Event" hidden>
-          <legend class="form-section__label">Event Details</legend>
-          <div class="row">
-            <div class="field field--line">
-              <label for="c-evtype">Event Type</label>
+          </fieldset>
+          <fieldset class="branch" data-branch="Event" hidden>
+            <legend>Event details</legend>
+            <div class="f-field">
+              <label for="c-evtype">What's the occasion?</label>
               <input id="c-evtype" name="event_type" type="text" placeholder="Baby shower, rehearsal dinner, reunion…">
             </div>
-            <div class="field field--line">
-              <label for="c-evhours">Coverage Needed</label>
-              <select id="c-evhours" name="event_hours">
-                <option value="">Select…</option>
-                <option>2 hours</option>
-                <option>3–4 hours</option>
-                <option>Half day</option>
-                <option>Full day</option>
-              </select>
-            </div>
-          </div>
-        </fieldset>
+          </fieldset>
+        </div>
 
-        <!-- Section: A Bit More -->
-        <div class="form-section">
-          <span class="form-section__label">A Bit More</span>
-          <div class="row">
-            <div class="field field--line">
-              <label for="c-loc">Location / Venue <span class="field__opt">(optional)</span></label>
-              <input id="c-loc" name="location" type="text" placeholder="City, venue, or 'still deciding'">
-            </div>
-            <div class="field field--line">
-              <label for="c-budget">Photography Investment <span class="field__opt">(optional)</span></label>
+        <div class="form-step form-step--last">
+          <p class="form-step__title"><span>03</span> The details</p>
+          <div class="f-field">
+            <label for="c-msg">Tell us about it <abbr title="required">*</abbr></label>
+            <textarea id="c-msg" name="message" required placeholder="Your people, your plans, the feeling you're after…"></textarea>
+          </div>
+          <div class="f-row">
+            <div class="f-field">
+              <label for="c-budget">Investment range <span class="f-opt">optional</span></label>
               <select id="c-budget" name="budget">
                 <option value="">Select a range…</option>
                 <option>Under $500</option>
@@ -314,19 +266,24 @@
                 <option>Still deciding / open to guidance</option>
               </select>
             </div>
-          </div>
-          <div class="field field--line" style="grid-column:1/-1">
-            <label for="c-msg">Tell us about your day, your people, the feeling you're after…</label>
-            <textarea id="c-msg" name="message" required></textarea>
-          </div>
-          <div class="field field--line" style="grid-column:1/-1">
-            <label for="c-referral">How did you hear about us? <span class="field__opt">(optional)</span></label>
-            <input id="c-referral" name="referral" type="text" placeholder="Instagram, Google, friend referral…">
+            <div class="f-field">
+              <label for="c-referral">How did you find us? <span class="f-opt">optional</span></label>
+              <select id="c-referral" name="referral">
+                <option value="">Select…</option>
+                <option>Instagram</option>
+                <option>Facebook</option>
+                <option>Google</option>
+                <option>Friend or family</option>
+                <option>Wedding vendor or venue</option>
+                <option>Other</option>
+              </select>
+            </div>
           </div>
         </div>
 
-        <button type="submit" class="btn btn--solid btn--full">Send Inquiry &rarr;</button>
-        <div class="form-status" aria-live="polite" role="status" style="color:var(--gold); font-size:.9rem; min-height:1.2em; text-align:center;"></div>
+        <button type="submit" class="btn btn--solid btn--full">Send inquiry &rarr;</button>
+        <p class="form-note">We reply within 48 business hours.</p>
+        <div class="form-status" aria-live="polite" role="status"></div>
       </form>
     </div>
 
@@ -358,7 +315,7 @@
       </div>
 
       <div class="reveal" style="margin-top:2rem; padding:1.5rem; background:var(--ink-2); border-left:2px solid var(--gold);">
-        <p style="font-family:var(--serif); font-style:italic; font-size:1rem; color:#e8e1d2; margin:0;">
+        <p style="font-family:var(--serif); font-style:italic; font-size:1.1rem; color:var(--paper); margin:0;">
           &ldquo;They write back like friends, not vendors. That's rare.&rdquo;
         </p>
         <cite style="display:block; margin-top:.6rem; color:var(--gold); font-size:.7rem; letter-spacing:.25em; text-transform:uppercase; font-style:normal;">A Recent Bride</cite>
@@ -434,6 +391,6 @@
 </footer>
 
 
-<script src="assets/js/main.js?v=13"></script>
+<script src="assets/js/main.js?v=14"></script>
 </body>
 </html>

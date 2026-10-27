@@ -292,7 +292,7 @@
           "The Heirloom": "$2,000–$3,500",
           "The Archive": "$3,500–$5,000",
           "Mini Session": "Under $500",
-          "Signature Session": "$500–$1,000",
+          "Signature Session": "Under $500",
           "Maternity & Fresh 48": "$500–$1,000",
         };
         const budgetSel = form.querySelector("#c-budget");
@@ -371,7 +371,7 @@
           } catch (_) {
             /* non-JSON response — keep the HTTP status line */
           }
-          statusEl.style.color = "#d97a6c";
+          statusEl.style.color = "#a6402e";
           statusEl.textContent =
             detail +
             ". Please email trent@mtframestudio.com directly.";
@@ -379,7 +379,7 @@
           console.warn("[MT Frame Studio] Formspree submission failed:", detail);
         }
       } catch (err) {
-        statusEl.style.color = "#d97a6c";
+        statusEl.style.color = "#a6402e";
         statusEl.textContent =
           "Network error: " +
           (err && err.message ? err.message : "unknown") +
