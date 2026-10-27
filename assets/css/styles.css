@@ -108,6 +108,32 @@ h1 em, h2 em, h3 em, h1 .italic, h2 .italic, h3 .italic { font-family: var(--ser
 }
 .section--tight { padding: clamp(3rem, 6vw, 5rem) 0; }
 .section--alt { background: var(--ink-2); }
+/* ---------- Ivory sections ----------
+   Text-led sections switch to the Ivory ground so pages alternate light and dark,
+   like an editorial magazine. Colours are re-pointed through the same variables,
+   so every component inside works unchanged. */
+.section--light {
+  --paper: #231e1a;           /* text becomes ink */
+  --mute: #6f6355;            /* taupe */
+  --gold: #7d6235;            /* gold text/lines that pass contrast on Ivory */
+  --gold-bright: #7d6235;
+  --line: rgba(125, 98, 53, 0.28);
+  --ink-2: #ebe3d6;           /* panels become Linen */
+  --ink-3: #e3d9c9;
+  background: #f5f0e8;
+  color: var(--paper);
+}
+.section--light .btn { border-color: #7d6235; color: #231e1a; }
+.section--light .btn:hover { background: #231e1a; border-color: #231e1a; color: #f5f0e8; }
+.section--light .btn--solid { background: #1e1915; border-color: #1e1915; color: #f5f0e8; }
+.section--light .btn--solid:hover { background: #7d6235; border-color: #7d6235; color: #f5f0e8; }
+.section--light ::selection { background: #e6d5c9; }
+.section--light p, .section--light li, .section--light .quote p, .section--light .lead--story { color: #3d342c; }
+.section--light .lead { color: #2b241f; }
+.section--light .lead--place { color: #6f6355; }
+.section--light h1, .section--light h2, .section--light h3 { color: #1e1915; }
+.section--light em, .section--light .italic { color: #7d6235; }
+
 .grid { display: grid; gap: clamp(1rem, 2vw, 2rem); }
 .center { text-align: center; }
 .max-readable { max-width: 60ch; margin-left: auto; margin-right: auto; }
@@ -205,7 +231,15 @@ h1 em, h2 em, h3 em, h1 .italic, h2 .italic, h3 .italic { font-family: var(--ser
 .nav__brand img { height: 44px; width: auto; }
 .nav__brand .nav__wordmark { height: 24px; width: auto; filter: drop-shadow(0 1px 10px rgba(0,0,0,.5)); }
 .nav.scrolled .nav__wordmark { filter: none; }
-@media (max-width: 720px) { .nav__brand .nav__wordmark { height: 20px; } }
+.nav__studio {
+  display: flex; align-items: center; gap: .9rem;
+  font-family: var(--sans); font-weight: 500; font-size: .7rem;
+  letter-spacing: .5em; margin-right: -.5em; text-transform: uppercase;
+  color: var(--paper); text-shadow: 0 1px 10px rgba(0,0,0,.5);
+}
+.nav__studio::before { content: ""; width: 1px; height: 22px; background: var(--gold); opacity: .75; }
+.nav.scrolled .nav__studio { text-shadow: none; }
+@media (max-width: 720px) { .nav__brand .nav__wordmark { height: 20px; } .nav__brand .nav__studio { display: none; } }
 .nav__brand span { display: block; font-family: var(--display); font-size: 1rem; letter-spacing: .28em; line-height: 1.1; white-space: nowrap; }
 .nav__brand small { color: var(--gold); font-size: 1rem; font-family: var(--serif); font-style: italic; letter-spacing: .02em; display: block; white-space: nowrap; line-height: 1.2; }
 .nav__links {
@@ -935,6 +969,7 @@ h1 em, h2 em, h3 em, h1 .italic, h2 .italic, h3 .italic { font-family: var(--ser
 .footer a:hover { color: var(--gold); }
 .footer ul { list-style: none; padding: 0; margin: 0; }
 .footer li { padding: .25rem 0; }
+.footer li address { font-size: .9rem; color: #d4ccba; }
 .footer__brand { display: flex; align-items: flex-start; gap: .8rem; margin-bottom: 1rem; }
 .footer__brand img { height: auto; width: 220px; max-width: 70%; }
 .footer__brand span { display: block; font-family: var(--display); font-size: 1.1rem; color: var(--paper); letter-spacing: .28em; margin-top: .35rem; }
