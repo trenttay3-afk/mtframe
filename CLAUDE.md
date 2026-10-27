@@ -43,8 +43,8 @@ python3 build_galleries.py   # emits galleries/{weddings,portraits,maternity,eve
 ## External dependencies embedded in source
 
 - **Behold.so Instagram widget** — feed ID `X5gVMeMYahrG5l8urKt4` in `index.html`, styled via CSS custom properties at the bottom of `assets/css/styles.css`. Changing the IG account = change the Behold feed, not the code.
-- **Google Fonts** — Cormorant Garamond + Inter, loaded per page.
+- **Google Fonts** — Bodoni Moda + Cormorant Garamond + Jost, loaded per page (same link in every `_src` head and `galleries/index.html`).
 
 ## Brand tokens
 
-Ink `#0a0908`, ivory `#f7f3ec`, signature gold `#c9a961`. Cormorant (display) + Inter (UI). Defined as CSS custom properties at the top of `assets/css/styles.css`.
+Umber `#1e1915` (ground), Ivory `#f5f0e8`, Champagne `#c9ab78` (gold; `#7d6235` for gold text on light grounds). Bodoni Moda (headlines, wordmark) + Cormorant Garamond italic (accents, slogan) + Jost (body, UI). Defined as CSS custom properties at the top of `assets/css/styles.css`. Slogan: "Filling the <span class="mt-mark">MT</span> Frames." (MT in the display face). Logo: `assets/images/logo/monogram.svg`. Full brand guidelines live in the MT Frame Studio design system.
