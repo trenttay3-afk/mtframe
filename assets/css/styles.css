@@ -350,10 +350,10 @@ h1 em, h2 em, h3 em, h1 .italic, h2 .italic, h3 .italic { font-family: var(--ser
    desktop hero a centered crop clips the top of her head — anchor higher so
    the full head stays in frame (with headroom for the breathe zoom). Harmless
    on mobile, where the taller hero shows the image's full height already. */
-.hero__bg--portraits { background-position: center 28%; }
+.hero__bg--portraits { background-position: center 16%; }
 .hero__bg--events { background-position: center 25%; }
 @media (max-width: 720px) {
-  .hero__bg--portraits { background-position: center 42%; }
+  .hero__bg--portraits { background-position: 36% center; }
   .hero__bg--events { background-position: center 25%; }
 }
 /* Weddings hero: portrait shot of the couple embracing; their faces sit in the
