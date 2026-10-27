@@ -53,6 +53,8 @@ h1, h2, h3, h4 {
   margin: 0 0 .4em 0;
   color: var(--paper);
 }
+h1, h2, h3 { text-wrap: balance; }
+p { text-wrap: pretty; }
 h1 { font-size: clamp(2.4rem, 6vw, 4.75rem); }
 h2 { font-size: clamp(1.85rem, 4vw, 3rem); }
 h3 { font-size: clamp(1.2rem, 2vw, 1.55rem); }
@@ -358,11 +360,16 @@ h1 em, h2 em, h3 em, h1 .italic, h2 .italic, h3 .italic { font-family: var(--ser
 .hero__tag {
   letter-spacing: .38em;
   text-transform: uppercase;
-  font-size: .78rem;
-  color: var(--gold-bright);
+  font-size: .82rem;
+  font-weight: 400;
+  color: var(--paper);
   margin-bottom: 1.5rem;
   display: block;
-  text-shadow: 0 1px 2px rgba(30,25,21, .65), 0 0 12px rgba(30,25,21, .35);
+  text-shadow: 0 1px 3px rgba(30,25,21,.9), 0 0 18px rgba(30,25,21,.75), 0 0 2px rgba(30,25,21,.6);
+}
+@media (max-width: 640px) {
+  .hero__tag { font-size: .68rem; letter-spacing: .2em; }
+  .lead--story, .lead--place { text-align: left; }
 }
 .hero__sub { font-size: 1.1rem; color: #ebe3d6; max-width: 600px; margin: 0 auto 1.4rem; }
 .hero__motto {
@@ -626,22 +633,29 @@ h1 em, h2 em, h3 em, h1 .italic, h2 .italic, h3 .italic { font-family: var(--ser
   width: 8px; height: 1px; background: var(--gold);
 }
 
+.lead--place { font-size: 1rem; color: var(--mute); }
+.lead--place strong { color: var(--gold-bright); }
+
 /* ---------- Testimonials ---------- */
 .quotes {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
+  gap: 3rem 4rem;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 @media (max-width: 780px) { .quotes { grid-template-columns: 1fr; } }
 .quote {
-  background: var(--ink-2);
-  border-left: 2px solid var(--gold);
-  padding: 2rem 2.2rem;
+  margin: 0;
+  padding: 2rem 0 0;
+  border-top: 1px solid var(--line);
+  text-align: center;
 }
 .quote p {
+  max-width: none;
   font-family: var(--serif);
   font-style: italic;
-  font-size: 1.15rem;
+  font-size: 1.3rem;
   color: #ebe3d6;
   line-height: 1.5;
   margin-bottom: 1rem;

@@ -90,7 +90,7 @@
       },
       // threshold 0: fire as soon as ANY part enters — never depends on the
       // element being a fraction of its own (possibly huge) height.
-      { threshold: 0, rootMargin: "0px 0px -8% 0px" }
+      { threshold: 0, rootMargin: "0px 0px 12% 0px" }
     );
     revealEls.forEach((el) => io.observe(el));
   }
