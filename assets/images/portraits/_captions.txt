@@ -4,35 +4,36 @@
 # Images not listed here get an auto-generated caption.
 
 01.jpg: Glancing back at golden hour
-02.jpg: Eyes closed, salt air
-03.jpg: Soft light at the shoreline
-04.jpg: Quiet moment at dusk
-05.jpg: Bundled up together
-06.jpg: Arms wide at the water's edge
-07.jpg: First snowfall
-08.jpg: Mirror on the red rocks
-09.jpg: Standing tall on red stone
-10.jpg: Sun-kissed and smiling
-11.jpg: Barefoot on the sand
-12.jpg: Turning back toward the waves
-13.jpg: Warm light on her shoulders
+02.jpg: Golden field, mother and son
+03.jpg: Holding on at sunset
+04.jpg: Eyes closed, salt air
+05.jpg: Up she goes
+06.jpg: A kiss above the lake
+07.jpg: Soft light at the shoreline
+08.jpg: Tucked in close in the tall grass
+09.jpg: Giggles on the Adirondack chair
+10.jpg: Piggyback laughter
+11.jpg: Arms wide at the water’s edge
+12.jpg: Cheek to cheek with mom
+13.jpg: Walking into the evening
 14.jpg: Golden hour glow
-15.jpg: Leaning into autumn
-16.jpg: Laughing on a log
-17.jpg: Resting on the old stone wall
-18.jpg: Front steps, best smiles
-19.jpg: Running to mom and dad
-20.jpg: A Sunday stroll
-21.jpg: Walk in the garden
-22.jpg: Hiding in the hostas
-23.jpg: Nose to nose
-24.jpg: Peek-a-boo behind the oak
-25.jpg: Running free on the lawn
-26.jpg: Held in golden light
-27.jpg: All smiles in the shade
-28.jpg: Explorer in the garden
-29.jpg: Side by side in the garden
-30.jpg: Curious little one
-31.jpg: Up in the air, sunshine everywhere
-32.jpg: Nestled in close
-33.jpg: Eye to eye with dad
+15.jpg: Looking up at the falling leaves
+16.jpg: On the old stone stairs
+17.jpg: Sun-kissed and smiling
+18.jpg: The best view in the family
+19.jpg: Swept off her feet
+20.jpg: Laughing on a log
+21.jpg: A kiss for the littlest one
+22.jpg: Sitting close in the garden
+23.jpg: Quiet moment at dusk
+24.jpg: Autumn light, just the two of us
+25.jpg: Family by the lake
+26.jpg: Something only they know
+27.jpg: First snowfall
+28.jpg: Harbor at golden hour
+29.jpg: Mirror on the red rocks
+30.jpg: Standing tall on red stone
+31.jpg: Front steps, best smiles
+32.jpg: Nose to nose
+33.jpg: All smiles in the shade
+34.jpg: Nestled in close

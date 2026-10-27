@@ -3,20 +3,26 @@
 # Blank lines and lines starting with # are ignored.
 # Images not listed here get an auto-generated caption.
 
-01.jpg: The moment everything changed
-02.jpg: Together, and then there were three
-03.jpg: Best friends and a bump
-04.jpg: Surrounded by love
-05.jpg: Side by side in the ivy
-06.jpg: Drifting on the old timber bridge
-07.jpg: Through the garden arch
-08.jpg: Mom and her girl, seaside
-09.jpg: Barefoot at the water's edge
-10.jpg: Little hands on the new baby
-11.jpg: Gentle hello
-12.jpg: Resting on the jetty
-13.jpg: Leading the way
-14.jpg: Running to mama
-15.jpg: Kisses for two
-16.jpg: A quiet glance down
-17.jpg: Waiting at the shoreline
+01.jpg: Autumn gold and a gentle hand
+02.jpg: The moment everything changed
+03.jpg: Together, and then there were three
+04.jpg: A walk through the pines, as a family
+05.jpg: Best friends and a bump
+06.jpg: Surrounded by love
+07.jpg: Holding the future
+08.jpg: Side by side in the ivy
+09.jpg: Drifting on the old timber bridge
+10.jpg: Close on the lakeshore
+11.jpg: Through the garden arch
+12.jpg: Mom and her girl, seaside
+13.jpg: Big brother leads the way
+14.jpg: Barefoot at the water’s edge
+15.jpg: Little hands on the new baby
+16.jpg: Looking out over the water
+17.jpg: Gentle hello
+18.jpg: Resting on the jetty
+19.jpg: Leading the way
+20.jpg: Running to mama
+21.jpg: Kisses for two
+22.jpg: A quiet glance down
+23.jpg: Waiting at the shoreline

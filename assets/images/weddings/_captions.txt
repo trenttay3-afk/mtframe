@@ -3,6 +3,22 @@
 # Blank lines and lines starting with # are ignored.
 # Images not listed here get an auto-generated caption.
 
-01.jpg: Snow Canyon engagement
-02.jpg: A stolen moment
-03.jpg: Winter whispers
+01.jpg: Just married, and the whole lawn cheering
+02.jpg: Final touches before the ceremony
+03.jpg: One last hug before the aisle
+04.jpg: Flower girls on their way
+05.jpg: The first look at the altar
+06.jpg: Listening to every word
+07.jpg: His face says everything
+08.jpg: Vows in the garden
+09.jpg: Two rings, one promise
+10.jpg: Bubbles between the tables
+11.jpg: A quiet moment inside
+12.jpg: Hydrangeas under the tent
+13.jpg: Toasts as the light softens
+14.jpg: The ring, the embrace
+15.jpg: Laughing on the park bench
+16.jpg: An afternoon in the park
+17.jpg: Snow Canyon engagement
+18.jpg: A stolen moment
+19.jpg: Winter whispers
