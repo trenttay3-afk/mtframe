@@ -323,7 +323,7 @@ h1 em, h2 em, h3 em, h1 .italic, h2 .italic, h3 .italic { font-family: var(--ser
 .hero__bg {
   position: absolute; inset: 0;
   background-size: cover; background-position: center;
-  transform: scale(1.04);
+  transform: scale(1.02);
   animation: heroBreathe 18s ease-in-out infinite alternate;
 }
 /* Homepage hero: landscape desktop crop → portrait mobile crop (keeps subject centered) */
@@ -335,18 +335,18 @@ h1 em, h2 em, h3 em, h1 .italic, h2 .italic, h3 .italic { font-family: var(--ser
    desktop hero a centered crop clips the top of her head — anchor higher so
    the full head stays in frame (with headroom for the breathe zoom). Harmless
    on mobile, where the taller hero shows the image's full height already. */
-.hero__bg--portraits { background-position: center 25%; }
-.hero__bg--events { background-position: center 10%; }
+.hero__bg--portraits { background-position: center 28%; }
+.hero__bg--events { background-position: center 25%; }
 @media (max-width: 720px) {
-  .hero__bg--portraits { background-position: 80% 30%; }
-  .hero__bg--events { background-position: center 20%; }
+  .hero__bg--portraits { background-position: center 42%; }
+  .hero__bg--events { background-position: center 25%; }
 }
 /* Weddings hero: portrait shot of the couple embracing; their faces sit in the
    upper-middle. Anchor the wide desktop crop higher so both faces stay framed. */
-.hero__bg--weddings { background-position: center 22%; }
+.hero__bg--weddings { background-position: center 30%; }
 @keyframes heroBreathe {
-  from { transform: scale(1.04); }
-  to   { transform: scale(1.10); }
+  from { transform: scale(1.02); }
+  to   { transform: scale(1.05); }
 }
 .hero::before {
   content: ""; position: absolute; inset: 0;
@@ -418,8 +418,15 @@ h1 em, h2 em, h3 em, h1 .italic, h2 .italic, h3 .italic { font-family: var(--ser
 }
 @keyframes bob { 0%,100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, 8px); } }
 
+/* Page headers: tall enough to show the photo, title anchored in the lower
+   third (over the darker end of the overlay) so faces stay clear above it. */
 .hero--page {
-  min-height: 60vh;
+  min-height: 72vh;
+  place-items: end center;
+  padding-bottom: clamp(3.5rem, 10vh, 7rem);
+}
+@media (max-width: 720px) {
+  .hero--page { min-height: 64vh; }
 }
 .hero--page .hero__inner h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); }
 
