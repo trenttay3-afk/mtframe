@@ -25,6 +25,7 @@ from __future__ import annotations
 
 from pathlib import Path
 import html
+import zlib
 import re
 import sys
 
@@ -210,7 +211,9 @@ def build_gallery(gallery: str, nav_tpl: str, footer_tpl: str) -> None:
     #   2. First image alphabetically
     hero_override = IMAGES / gallery / "hero.jpg"
     if hero_override.exists():
-        hero_rel = f"../assets/images/{gallery}/hero.jpg"
+        # Version by content so a replaced hero.jpg is never served stale from cache.
+        hero_ver = zlib.crc32(hero_override.read_bytes()) & 0xFFFF
+        hero_rel = f"../assets/images/{gallery}/hero.jpg?v={hero_ver:x}"
     elif images:
         hero_rel = f"../assets/images/{gallery}/{images[0].name}"
     else:
