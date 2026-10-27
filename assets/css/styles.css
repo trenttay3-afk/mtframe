@@ -113,26 +113,31 @@ h1 em, h2 em, h3 em, h1 .italic, h2 .italic, h3 .italic { font-family: var(--ser
    like an editorial magazine. Colours are re-pointed through the same variables,
    so every component inside works unchanged. */
 .section--light {
-  --paper: #231e1a;           /* text becomes ink */
-  --mute: #6f6355;            /* taupe */
-  --gold: #7d6235;            /* gold text/lines that pass contrast on Ivory */
-  --gold-bright: #7d6235;
-  --line: rgba(125, 98, 53, 0.28);
-  --ink-2: #ebe3d6;           /* panels become Linen */
-  --ink-3: #e3d9c9;
-  background: #f5f0e8;
+  --paper: #2e2620;           /* text becomes ink */
+  --mute: #5c5147;            /* deepened taupe for small text */
+  --gold: #6b5329;            /* deep antique gold: passes contrast on Linen */
+  --gold-bright: #6b5329;
+  --line: rgba(107, 83, 41, 0.3);
+  --ink-2: #e2d8c7;           /* panels a shade deeper than the ground */
+  --ink-3: #dacfbc;
+  background: #ebe3d6;        /* Linen: warm and soft, not white */
   color: var(--paper);
 }
-.section--light .btn { border-color: #7d6235; color: #231e1a; }
+.section--light .btn { border-color: #6b5329; color: #231e1a; }
 .section--light .btn:hover { background: #231e1a; border-color: #231e1a; color: #f5f0e8; }
 .section--light .btn--solid { background: #1e1915; border-color: #1e1915; color: #f5f0e8; }
-.section--light .btn--solid:hover { background: #7d6235; border-color: #7d6235; color: #f5f0e8; }
-.section--light ::selection { background: #e6d5c9; }
-.section--light p, .section--light li, .section--light .quote p, .section--light .lead--story { color: #3d342c; }
-.section--light .lead { color: #2b241f; }
-.section--light .lead--place { color: #6f6355; }
-.section--light h1, .section--light h2, .section--light h3 { color: #1e1915; }
-.section--light em, .section--light .italic { color: #7d6235; }
+.section--light .btn--solid:hover { background: #6b5329; border-color: #6b5329; color: #f5f0e8; }
+.section--light ::selection { background: #d9c3b3; }
+/* Readability on the light ground: regular weight (Jost Light's hairlines shimmer on light
+   backgrounds), slightly darker ink, a touch more line height. */
+.section--light p, .section--light li, .section--light .lead--story { color: #2e2620; font-weight: 400; line-height: 1.75; }
+.section--light .lead { color: #231e1a; font-weight: 400; }
+.section--light .lead--place { color: #5c5147; }
+.section--light .quote p { color: #2e2620; font-weight: 500; }
+.section--light h1, .section--light h2, .section--light h3 { color: #1e1915; font-weight: 350; }
+.section--light .eyebrow { color: #6b5329; font-weight: 500; }
+.section--light em, .section--light .italic { color: #6b5329; font-weight: 500; }
+.section--light .mt-explain__note { color: #5c5147; font-weight: 500; }
 
 .grid { display: grid; gap: clamp(1rem, 2vw, 2rem); }
 .center { text-align: center; }
