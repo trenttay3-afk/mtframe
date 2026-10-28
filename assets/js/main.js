@@ -103,7 +103,7 @@
     const closeBtn = lb.querySelector(".lightbox__close");
     const prevBtn = lb.querySelector(".lightbox__prev");
     const nextBtn = lb.querySelector(".lightbox__next");
-    const figures = Array.from(document.querySelectorAll(".masonry figure, .gallery-lead figure"));
+    const figures = Array.from(document.querySelectorAll(".masonry figure, .gallery-lead figure, .story figure[data-full]"));
     let idx = 0;
     let lastFocus = null;
     let touchStartX = 0;

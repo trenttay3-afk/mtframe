@@ -56,6 +56,12 @@ PAGES: dict[str, str | None] = {
 # and an image folder at assets/images/<key>/.
 GALLERIES: list[str] = ["weddings", "portraits", "maternity", "events"]
 
+# Featured stories: _src/stories/<file>.html -> stories/<file>.html, with the
+# nav item to highlight. Images live in assets/images/stories/<slug>/.
+STORIES: dict[str, str] = {
+    "kacie-and-clancy.html": "weddings",
+}
+
 # Active-link keys that can appear in the nav.
 NAV_KEYS = ["home", "about", "weddings", "portraits", "maternity", "events",
             "investment", "contact"]
@@ -84,10 +90,11 @@ WEBP_QUALITY = 80
 
 # ---- Partial rendering --------------------------------------------------
 
-def render_partial(template: str, active_key: str | None, is_gallery: bool) -> str:
-    """Fill {{BASE}}, {{GALLERIES}}, and {{ACTIVE_*}} in a nav/footer partial."""
-    base = "../" if is_gallery else ""
-    galleries = "" if is_gallery else "galleries/"
+def render_partial(template: str, active_key: str | None, is_gallery: bool, subdir: bool = False) -> str:
+    """Fill {{BASE}}, {{GALLERIES}}, and {{ACTIVE_*}} in a nav/footer partial.
+    `subdir` is for pages one level down that are not galleries (e.g. stories/)."""
+    base = "../" if (is_gallery or subdir) else ""
+    galleries = "" if is_gallery else ("../galleries/" if subdir else "galleries/")
     out = template.replace("{{BASE}}", base).replace("{{GALLERIES}}", galleries)
     for key in NAV_KEYS:
         out = out.replace("{{ACTIVE_" + key + "}}", "active" if key == active_key else "")
@@ -360,6 +367,22 @@ def build_page(filename: str, active_key: str | None, nav_tpl: str, footer_tpl: 
     print(f"wrote {filename}")
 
 
+def build_stories(nav_tpl: str, footer_tpl: str) -> None:
+    """Render _src/stories/*.html into stories/*.html (featured sessions).
+    Nav highlights Weddings or Portraits depending on the filename's STORIES entry."""
+    folder = SRC / "stories"
+    if not folder.exists():
+        return
+    (ROOT / "stories").mkdir(exist_ok=True)
+    for src_path in sorted(folder.glob("*.html")):
+        active = STORIES.get(src_path.name, "weddings")
+        src = src_path.read_text(encoding="utf-8")
+        src = src.replace("{{NAV}}", render_partial(nav_tpl, active, is_gallery=False, subdir=True))
+        src = src.replace("{{FOOTER}}", render_partial(footer_tpl, None, is_gallery=False, subdir=True))
+        (ROOT / "stories" / src_path.name).write_text(src, encoding="utf-8")
+        print(f"wrote stories/{src_path.name}")
+
+
 # ---- Entry point --------------------------------------------------------
 
 def main() -> int:
@@ -377,6 +400,9 @@ def main() -> int:
     # Galleries
     for gallery in GALLERIES:
         build_gallery(gallery, nav_tpl, footer_tpl)
+
+    # Featured stories
+    build_stories(nav_tpl, footer_tpl)
 
     print("--- done ---")
     return 0
