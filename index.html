@@ -53,11 +53,11 @@
 <!-- Performance: preconnect & preload LCP hero -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="image" href="assets/images/hero/home.jpg" media="(min-width: 721px)" fetchpriority="high">
-<link rel="preload" as="image" href="assets/images/hero/home-mobile.jpg" media="(max-width: 720px)" fetchpriority="high">
+<link rel="preload" as="image" href="assets/images/hero/home.webp" media="(min-width: 721px)" fetchpriority="high">
+<link rel="preload" as="image" href="assets/images/hero/home-mobile.webp" media="(max-width: 720px)" fetchpriority="high">
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="assets/css/styles.css?v=33">
+<link rel="stylesheet" href="assets/css/styles.css?v=34">
 
 <!-- Schema.org: LocalBusiness (ProfessionalService) + WebSite + Organization + People -->
 <script type="application/ld+json">
@@ -255,6 +255,8 @@
 <!-- ============ HERO (trimmed — see INTRO below for location + secondary CTAs) ============ -->
 <header class="hero">
   <div class="hero__bg hero__bg--home"></div>
+  <div class="hero__slide" style="background-image:url('assets/images/portraits/web/01.webp'); background-position: 30% 50%;"></div>
+  <div class="hero__slide" style="background-image:url('assets/images/portraits/web/23.webp'); background-position: 70% 50%;"></div>
   <div class="hero__inner">
     <span class="hero__tag">Weddings · Portraits · Maternity</span>
     <h1>Stories told in <em>light</em>.</h1>
@@ -293,23 +295,54 @@
   </div>
 </section>
 
+<!-- ============ EDITORIAL SPREAD (magazine rhythm: full bleed, offset pair, image + words) ============ -->
+<section class="spread" aria-label="Selected frames">
+  <figure class="spread__bleed reveal">
+    <img src="assets/images/weddings/web/14.webp" alt="The ring and the embrace, in black and white" loading="lazy" decoding="async" width="2400" height="1600">
+  </figure>
+  <div class="container spread__pair">
+    <figure class="spread__a reveal">
+      <img src="assets/images/portraits/thumbs/08.webp" alt="Mother and son tucked in close in the tall golden grass" loading="lazy" decoding="async" width="960" height="1200">
+      <figcaption>Tucked in close, golden hour</figcaption>
+    </figure>
+    <div class="spread__words reveal">
+      <p class="spread__quote">The glance before the laugh. The breath before the kiss.</p>
+      <span class="spread__by">What we watch for</span>
+    </div>
+    <figure class="spread__b reveal">
+      <img src="assets/images/maternity/thumbs/07.webp" alt="Hands resting on her bump in autumn light" loading="lazy" decoding="async" width="800" height="1200">
+      <figcaption>Holding the future</figcaption>
+    </figure>
+  </div>
+  <div class="container spread__wide">
+    <figure class="spread__c reveal">
+      <img src="assets/images/portraits/web/09.webp" alt="Baby giggling on her dad&rsquo;s lap on an Adirondack chair" loading="lazy" decoding="async" width="2400" height="2400">
+    </figure>
+    <div class="spread__side reveal">
+      <span class="eyebrow">Portraits &amp; Family</span>
+      <p class="spread__line">Real laughter, unhurried light, and the people you love most.</p>
+      <a href="galleries/portraits.html" class="link-arrow">See the portraits <span aria-hidden="true">&rarr;</span></a>
+    </div>
+  </div>
+</section>
+
 <!-- ============ CATEGORIES ============ -->
 <section class="section--tight" aria-label="Galleries">
   <div class="categories">
     <a class="cat-card reveal" href="galleries/weddings.html">
-      <div class="cat-card__img" style="background-image:url('assets/images/weddings/thumbs/01.jpg')"></div>
+      <div class="cat-card__img" style="background-image:url('assets/images/weddings/thumbs/01.webp')"></div>
       <div class="cat-card__label"><h3>Weddings</h3><span>Ceremony · Elopement</span></div>
     </a>
     <a class="cat-card reveal" href="galleries/portraits.html">
-      <div class="cat-card__img" style="background-image:url('assets/images/portraits/thumbs/01.jpg')"></div>
+      <div class="cat-card__img" style="background-image:url('assets/images/portraits/thumbs/01.webp')"></div>
       <div class="cat-card__label"><h3>Portraits</h3><span>Solo · Couples · Family</span></div>
     </a>
     <a class="cat-card reveal" href="galleries/maternity.html">
-      <div class="cat-card__img" style="background-image:url('assets/images/maternity/thumbs/01.jpg')"></div>
+      <div class="cat-card__img" style="background-image:url('assets/images/maternity/thumbs/01.webp')"></div>
       <div class="cat-card__label"><h3>Maternity</h3><span>Pregnancy &amp; Newborn</span></div>
     </a>
     <a class="cat-card reveal" href="galleries/events.html">
-      <div class="cat-card__img" style="background-image:url('assets/images/events/thumbs/06.jpg')"></div>
+      <div class="cat-card__img" style="background-image:url('assets/images/events/thumbs/06.webp')"></div>
       <div class="cat-card__label"><h3>Events</h3><span>Showers · Celebrations</span></div>
     </a>
   </div>
@@ -318,7 +351,7 @@
 <!-- ============ ABOUT SPLIT ============ -->
 <section class="section section--alt">
   <div class="container split">
-    <div class="split__img reveal" style="background-image:url('assets/images/about_photo/MT.jpg?v=2')" role="img" aria-label="Megan and Trent of MT Frame Studio"></div>
+    <div class="split__img reveal" style="background-image:url('assets/images/about_photo/MT.webp')" role="img" aria-label="Megan and Trent of MT Frame Studio"></div>
     <div class="reveal">
       <span class="eyebrow">The Photographers</span>
       <span class="rule"></span>
@@ -413,6 +446,8 @@
   </div>
 </section>
 
+<a class="book-fab" href="contact.html">Inquire <span aria-hidden="true">&rarr;</span></a>
+
 <!-- ============ FOOTER ============ -->
 <footer class="footer">
   <div class="footer__grid">
@@ -454,6 +489,6 @@
 </footer>
 
 
-<script src="assets/js/main.js?v=14"></script>
+<script src="assets/js/main.js?v=15"></script>
 </body>
 </html>

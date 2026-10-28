@@ -34,7 +34,7 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add "*.html" "galleries/*.html" "assets/images/*/thumbs/*.jpg"
+          git add "*.html" "galleries/*.html" "assets/images/*/thumbs/*.jpg" "assets/images/*/thumbs/*.webp" "assets/images/*/web/*.webp"
           if git diff --staged --quiet; then
             echo "No changes to commit."
           else

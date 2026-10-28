@@ -103,7 +103,7 @@
     const closeBtn = lb.querySelector(".lightbox__close");
     const prevBtn = lb.querySelector(".lightbox__prev");
     const nextBtn = lb.querySelector(".lightbox__next");
-    const figures = Array.from(document.querySelectorAll(".masonry figure"));
+    const figures = Array.from(document.querySelectorAll(".masonry figure, .gallery-lead figure"));
     let idx = 0;
     let lastFocus = null;
     let touchStartX = 0;
@@ -397,6 +397,18 @@
     const h = parseInt(img.getAttribute("height") || 0);
     img.closest("figure").classList.add(h > w ? "orient-portrait" : "orient-landscape");
   });
+
+  /* ---------- Floating "Inquire" button on phones ---------- */
+  const fab = document.querySelector(".book-fab");
+  if (fab) {
+    const onContact = /contact\.html/.test(location.pathname);
+    const update = () => {
+      const show = !onContact && window.scrollY > window.innerHeight * 0.8;
+      fab.classList.toggle("show", show);
+    };
+    window.addEventListener("scroll", update, { passive: true });
+    update();
+  }
 
   /* ---------- Footer year ---------- */
   const yr = document.querySelector("[data-year]");

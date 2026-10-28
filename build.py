@@ -25,6 +25,7 @@ from __future__ import annotations
 
 from pathlib import Path
 import html
+import os
 import zlib
 import re
 import sys
@@ -64,6 +65,22 @@ IMAGE_EXTS = {".jpg", ".jpeg", ".png"}
 # Thumbnail config: ~800px long edge, quality 78, progressive.
 THUMB_MAX = 800
 THUMB_QUALITY = 78
+
+# Gallery lead: (main image, side image, line) shown editorially above the grid.
+# The two images are taken out of the grid so nothing repeats.
+GALLERY_LEAD: dict[str, tuple[str, str, str]] = {
+    "weddings":  ("08", "07", "Unhurried, honest wedding days. The vows, and the reactions to the vows."),
+    "portraits": ("25", "12", "Families, couples and solo sessions, in the light the Lakes Region does best."),
+    "maternity": ("21", "01", "The waiting, the wonder, and the people already in love with someone they haven't met."),
+    "events":    ("05", "04", "Showers, gatherings and the small celebrations worth remembering."),
+}
+
+# Web derivatives (WebP). The grid shows thumbs/NN.webp (1200px, sharp on
+# retina screens); the lightbox opens web/NN.webp (2400px) instead of the
+# multi-megabyte original. Originals stay untouched as the masters.
+WEB_THUMB_MAX = 1200
+WEB_FULL_MAX = 2400
+WEBP_QUALITY = 80
 
 # ---- Partial rendering --------------------------------------------------
 
@@ -174,6 +191,29 @@ def ensure_thumb(source: Path, thumb: Path) -> bool:
     return True
 
 
+def ensure_webp(source: Path, out: Path, max_edge: int) -> bool:
+    """Write a WebP derivative of `source` at most `max_edge` px on the long
+    side, if missing or older than the source. Returns True if written."""
+    if out.exists() and (os.environ.get("CI") or out.stat().st_mtime >= source.stat().st_mtime):
+        # In CI every file has the checkout time, so trust an existing file there.
+        return False
+    out.parent.mkdir(parents=True, exist_ok=True)
+    with Image.open(source) as im:
+        icc = im.info.get("icc_profile")
+        im = ImageOps.exif_transpose(im)
+        if im.mode not in ("RGB",):
+            im = im.convert("RGB")
+        w, h = im.size
+        if max(w, h) > max_edge:
+            k = max_edge / max(w, h)
+            im = im.resize((round(w * k), round(h * k)), Image.LANCZOS)
+        kw = {"quality": WEBP_QUALITY, "method": 6}
+        if icc:
+            kw["icc_profile"] = icc
+        im.save(out, "WEBP", **kw)
+    return True
+
+
 def image_dimensions(path: Path) -> tuple[int, int]:
     """Return (width, height) for an image, via Pillow."""
     with Image.open(path) as im:
@@ -203,6 +243,11 @@ def build_gallery(gallery: str, nav_tpl: str, footer_tpl: str) -> None:
     for img in images:
         if ensure_thumb(img, thumbs_dir / img.name):
             rebuilt += 1
+        stem = img.stem
+        if ensure_webp(img, thumbs_dir / f"{stem}.webp", WEB_THUMB_MAX):
+            rebuilt += 1
+        if ensure_webp(img, IMAGES / gallery / "web" / f"{stem}.webp", WEB_FULL_MAX):
+            rebuilt += 1
     if rebuilt:
         print(f"  thumbs: regenerated {rebuilt}/{len(images)} for {gallery}")
 
@@ -213,32 +258,63 @@ def build_gallery(gallery: str, nav_tpl: str, footer_tpl: str) -> None:
     if hero_override.exists():
         # Version by content so a replaced hero.jpg is never served stale from cache.
         hero_ver = zlib.crc32(hero_override.read_bytes()) & 0xFFFF
-        hero_rel = f"../assets/images/{gallery}/hero.jpg?v={hero_ver:x}"
+        ensure_webp(hero_override, IMAGES / gallery / "web" / "hero.webp", WEB_FULL_MAX)
+        hero_rel = f"../assets/images/{gallery}/web/hero.webp?v={hero_ver:x}"
     elif images:
         hero_rel = f"../assets/images/{gallery}/{images[0].name}"
     else:
         hero_rel = f"../assets/images/hero/{gallery}.jpg"  # final fallback
 
+    def fig(img: Path, cls: str = "", src_dir: str = "thumbs") -> str:
+        cap = html.escape(captions.get(img.name) or default_caption(gallery, images.index(img) + 1), quote=True)
+        w, h = image_dimensions(IMAGES / gallery / src_dir / f"{img.stem}.webp")
+        c = f' class="{cls}"' if cls else ""
+        return (f'<figure{c} data-full="../assets/images/{gallery}/web/{img.stem}.webp">'
+                f'<img src="../assets/images/{gallery}/{src_dir}/{img.stem}.webp" alt="{cap}" '
+                f'loading="eager" decoding="async" width="{w}" height="{h}">'
+                f'<figcaption>{cap}</figcaption></figure>')
+
+    lead_html = ""
+    grid_images = images
+    lead = GALLERY_LEAD.get(gallery)
+    if lead:
+        by_stem = {p.stem: p for p in images}
+        main, side = by_stem.get(lead[0]), by_stem.get(lead[1])
+        if main and side:
+            lead_html = (
+                '<div class="gallery-lead">\n'
+                f'      {fig(main, "gallery-lead__main", "web")}\n'
+                '      <div class="gallery-lead__side">\n'
+                f'        <p class="gallery-lead__line reveal">{html.escape(lead[2])}</p>\n'
+                f'        {fig(side)}\n'
+                '      </div>\n'
+                '    </div>'
+            )
+            grid_images = [p for p in images if p not in (main, side)]
+
     # Figure markup
     fig_lines: list[str] = []
     schema_lines: list[str] = []
-    for idx, img in enumerate(images, start=1):
+    for img in grid_images:
+        idx = images.index(img) + 1
         caption = captions.get(img.name) or default_caption(gallery, idx)
         caption_html = html.escape(caption, quote=True)
         try:
-            w, h = image_dimensions(thumbs_dir / img.name)
+            w, h = image_dimensions(thumbs_dir / f"{img.stem}.webp")
         except (FileNotFoundError, OSError):
             w, h = (533, 800)
         fig_lines.append(
-            f'    <figure data-full="../assets/images/{gallery}/{img.name}">\n'
-            f'      <img src="../assets/images/{gallery}/thumbs/{img.name}" '
+            f'    <figure data-full="../assets/images/{gallery}/web/{img.stem}.webp">\n'
+            f'      <img src="../assets/images/{gallery}/thumbs/{img.stem}.webp" '
             f'alt="{caption_html}" loading="lazy" decoding="async" '
             f'width="{w}" height="{h}">\n'
             f'      <figcaption>{caption_html}</figcaption>\n'
             f'    </figure>'
         )
-        # JSON-LD ImageObject entry. Escape quotes with &quot; since the
-        # whole block is embedded as valid JSON inside <script type="application/ld+json">.
+
+    for idx, img in enumerate(images, start=1):
+        caption = captions.get(img.name) or default_caption(gallery, idx)
+        # JSON-LD ImageObject entry (every image, lead included).
         name_json = caption.replace('"', '\\"').replace("&", "&amp;")
         schema_lines.append(
             f'  {{"@type":"ImageObject",'
@@ -252,6 +328,7 @@ def build_gallery(gallery: str, nav_tpl: str, footer_tpl: str) -> None:
 
     # Template fill
     src = src_path.read_text(encoding="utf-8")
+    src = src.replace("{{GALLERY_LEAD}}", lead_html)
     src = src.replace("{{GALLERY_FIGURES}}", figures_block)
     src = src.replace("{{SCHEMA_IMAGES}}", schema_block)
     src = src.replace("{{HERO_IMAGE}}", hero_rel)

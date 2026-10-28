@@ -27,3 +27,4 @@ venv/
 
 # Node, just in case
 node_modules/
+_webp_batch.py

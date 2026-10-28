@@ -37,22 +37,12 @@
 
 <link rel="icon" href="assets/images/logo/favicon.ico?v=6">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="image" href="assets/images/hero/investment.jpg?v=2" fetchpriority="high">
+<link rel="preload" as="image" href="assets/images/hero/investment.webp" fetchpriority="high">
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/styles.css?v=33">
+<link rel="stylesheet" href="assets/css/styles.css?v=34">
 
 <style>
-  /* Page-scoped rhythm tightening so Portraits peeks into view on landing. */
   .page-investment .hero--page { min-height: 60vh; }
-  .page-investment .section--compact { padding: clamp(2rem, 4vw, 3.25rem) 0; }
-  .page-investment .section--compact + .section--compact { padding-top: 1.5rem; }
-  .page-investment .section--compact .tiers { margin-top: 1rem; }
-  .page-investment .section--compact .tier { padding: 1.75rem 1.5rem; }
-  .page-investment .section--compact .tier__price { margin: .6rem 0; font-size: 2.2rem; }
-  .page-investment .section--compact .tier__list { margin: 1rem 0 1.25rem; }
-  .page-investment .section--compact .tier__list li { padding: .4rem 0 .4rem 1.4rem; font-size: .88rem; }
-  .page-investment .inv-intro { margin-bottom: 1rem !important; }
-  .page-investment .inv-intro p { margin-bottom: 0; }
 </style>
 
 <script type="application/ld+json">
@@ -209,7 +199,7 @@
 {{NAV}}
 
 <header class="hero hero--page">
-  <div class="hero__bg" style="background-image:url('assets/images/hero/investment.jpg?v=2')"></div>
+  <div class="hero__bg" style="background-image:url('assets/images/hero/investment.webp')"></div>
   <div class="hero__inner">
     <span class="hero__tag">Investment</span>
     <h1>Built to be <em>loved</em>, not filed.</h1>
@@ -228,6 +218,7 @@
     <h4 class="center" style="color:var(--gold); margin-bottom:1rem;">Weddings</h4>
     <div class="tiers reveal">
       <div class="tier">
+        <img class="tier__img" src="assets/images/weddings/web/16.webp" alt="Couple on a park bench in the afternoon" loading="lazy" decoding="async" style="object-position:center 40%">
         <span class="tier__badge">The Sonnet</span>
         <h3>Intimate &amp; Elopement</h3>
         <div class="tier__price">$1200<small> /starting</small></div>
@@ -243,6 +234,7 @@
       </div>
 
       <div class="tier tier--featured">
+        <img class="tier__img" src="assets/images/weddings/web/05.webp" alt="The first look at the altar" loading="lazy" decoding="async" style="object-position:center 20%">
         <span class="tier__badge">Most Booked</span>
         <h3>The Heirloom</h3>
         <div class="tier__price">$2500<small> /starting</small></div>
@@ -259,6 +251,7 @@
       </div>
 
       <div class="tier">
+        <img class="tier__img" src="assets/images/weddings/web/01.webp" alt="Just married, the whole lawn cheering" loading="lazy" decoding="async" style="object-position:center 35%">
         <span class="tier__badge">The Archive</span>
         <h3>Full Weekend</h3>
         <div class="tier__price">$4200<small> /starting</small></div>
@@ -285,6 +278,7 @@
     <h4 class="center" style="color:var(--gold); margin-bottom:1rem;">Portraits &amp; Maternity</h4>
     <div class="tiers reveal">
       <div class="tier">
+        <img class="tier__img" src="assets/images/portraits/web/01.webp" alt="Glancing back at golden hour on the beach" loading="lazy" decoding="async" style="object-position:30% 50%">
         <span class="tier__badge">Golden Hour</span>
         <h3>Mini Session</h3>
         <div class="tier__price">$250<small> /30 min</small></div>
@@ -297,6 +291,7 @@
         <a href="contact.html?type=Portrait&amp;package=Mini%20Session" class="btn btn--sm">Inquire</a>
       </div>
       <div class="tier tier--featured">
+        <img class="tier__img" src="assets/images/portraits/web/33.webp" alt="A young family all smiles in the shade" loading="lazy" decoding="async" style="object-position:center 30%">
         <span class="tier__badge">Signature</span>
         <h3>Full Session</h3>
         <div class="tier__price">$400<small> /1 hr</small></div>
@@ -309,6 +304,7 @@
         <a href="contact.html?type=Portrait&amp;package=Signature%20Session" class="btn btn--sm btn--solid">Inquire</a>
       </div>
       <div class="tier">
+        <img class="tier__img" src="assets/images/maternity/web/07.webp" alt="Hands resting on her bump in autumn light" loading="lazy" decoding="async" style="object-position:center 40%">
         <span class="tier__badge">Motherhood</span>
         <h3>Maternity &amp; Fresh 48</h3>
         <div class="tier__price">$700<small> /2 hr</small></div>
@@ -379,6 +375,6 @@
 
 {{FOOTER}}
 
-<script src="assets/js/main.js?v=14"></script>
+<script src="assets/js/main.js?v=15"></script>
 </body>
 </html>
