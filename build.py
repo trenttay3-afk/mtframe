@@ -59,7 +59,7 @@ GALLERIES: list[str] = ["weddings", "portraits", "maternity", "events"]
 # Featured stories: _src/stories/<file>.html -> stories/<file>.html, with the
 # nav item to highlight. Images live in assets/images/stories/<slug>/.
 STORIES: dict[str, str] = {
-    "kacie-and-clancy.html": "weddings",
+    # "kacie-and-clancy.html": "weddings",  (parked in ../mtframe-parked)
 }
 
 # Active-link keys that can appear in the nav.

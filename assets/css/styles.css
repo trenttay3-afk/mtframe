@@ -1481,13 +1481,15 @@ body:has(behold-widget) .ig-fallback { display: none; }
 /* Base image shows at first; two slides fade over it in turn (21s cycle). */
 .hero__slide {
   position: absolute; inset: 0; background-size: cover; background-position: center;
-  opacity: 0; animation: heroFade 21s infinite; will-change: opacity;
+  opacity: 0; animation: heroFade 28s infinite; will-change: opacity;
 }
-.hero__slide + .hero__slide { animation-delay: 7s; }
+/* Slides are div 2-4 (hero__bg is div 1). Base photo shows 0-7s, then each slide gets 7s, crossfading 1s */
+.hero__slide:nth-of-type(3) { animation-delay: 7s; }
+.hero__slide:nth-of-type(4) { animation-delay: 14s; }
 @keyframes heroFade {
-  0%, 30%  { opacity: 0; }
-  36%, 63% { opacity: 1; }
-  69%, 100% { opacity: 0; }
+  0%, 21%  { opacity: 0; }
+  25%, 46% { opacity: 1; }
+  50%, 100% { opacity: 0; }
 }
 
 /* Gentle page fade-in */

@@ -263,14 +263,4 @@
     <image:image><image:loc>https://mtframestudio.com/assets/images/events/07.jpg</image:loc><image:caption>Under the tent, MT Frame Studio</image:caption></image:image>
     <image:image><image:loc>https://mtframestudio.com/assets/images/events/08.jpg</image:loc><image:caption>Welcome-home cake, MT Frame Studio</image:caption></image:image>
   </url>
-  <url>
-    <loc>https://mtframestudio.com/stories/kacie-and-clancy.html</loc>
-    <lastmod>2026-10-28</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://mtframestudio.com/assets/images/stories/kacie-clancy/og.jpg</image:loc>
-      <image:title>Kacie &amp; Clancy, a backyard wedding in New Hampshire</image:title>
-    </image:image>
-  </url>
 </urlset>
