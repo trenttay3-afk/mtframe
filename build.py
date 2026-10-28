@@ -292,7 +292,6 @@ def build_gallery(gallery: str, nav_tpl: str, footer_tpl: str) -> None:
                 '<div class="gallery-lead">\n'
                 f'      {fig(main, "gallery-lead__main", "web")}\n'
                 '      <div class="gallery-lead__side">\n'
-                f'        <p class="gallery-lead__line reveal">{html.escape(lead[2])}</p>\n'
                 f'        {fig(side)}\n'
                 '      </div>\n'
                 '    </div>'

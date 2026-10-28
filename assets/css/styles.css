@@ -1458,23 +1458,21 @@ body:has(behold-widget) .ig-fallback { display: none; }
    image beside it, before the masonry grid.
    ========================================================================= */
 .gallery-lead {
-  display: grid; grid-template-columns: 7fr 4fr; gap: clamp(1.5rem, 4vw, 4rem);
-  align-items: center; margin: 0 0 clamp(2.5rem, 6vw, 5rem);
+  display: grid; grid-template-columns: 7fr 4fr; gap: clamp(1rem, 2.5vw, 1.8rem);
+  align-items: start; margin: 0 0 clamp(2.5rem, 6vw, 4.5rem);
 }
-.gallery-lead figure { margin: 0; cursor: zoom-in; position: relative; }
-.gallery-lead img { display: block; width: 100%; height: auto; }
-.gallery-lead__main img { max-height: 88vh; object-fit: cover; }
-.gallery-lead__side { display: grid; gap: clamp(1.5rem, 3vw, 2.5rem); }
-.gallery-lead__line {
-  font-family: var(--serif); font-style: italic; font-size: clamp(1.3rem, 2vw, 1.65rem);
-  line-height: 1.35; color: var(--paper); margin: 0; max-width: 20ch;
-}
+/* Matched heights: the landscape is 3:2 and the portrait is cropped to 6:7, which
+   gives both the same height across the 7fr / 4fr columns. Tops and captions line up. */
+.gallery-lead figure { margin: 0; cursor: zoom-in; }
+.gallery-lead img { display: block; width: 100%; height: auto; object-fit: cover; }
+.gallery-lead__main img { aspect-ratio: 3 / 2; }
+.gallery-lead__side img { aspect-ratio: 6 / 7; object-position: center 25%; }
 .gallery-lead figcaption {
   margin-top: .6rem; font-family: var(--serif); font-style: italic; font-size: .95rem; color: var(--mute);
 }
 @media (max-width: 820px) {
   .gallery-lead { grid-template-columns: 1fr; }
-  .gallery-lead__side { grid-template-columns: 1fr; }
+  .gallery-lead__side img { aspect-ratio: 4 / 5; }
 }
 
 /* =========================================================================
