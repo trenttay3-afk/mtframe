@@ -1573,3 +1573,6 @@ body { animation: pageIn .7s ease-out both; }
 .story-link:hover { color: var(--paper); }
 .story-link:hover .link-arrow { color: var(--paper); border-color: var(--gold); }
 @media (max-width: 760px) { .story-link { grid-template-columns: 1fr; } }
+
+.st-quote .rule, .st-quote .eyebrow { display: block; margin-left: auto; margin-right: auto; }
+.st-quote .rule { margin-bottom: 1.8rem; }
